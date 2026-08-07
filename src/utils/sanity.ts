@@ -31,6 +31,9 @@ export const ARTICLE_BY_SLUG_QUERY = defineQuery(`*[_type == "article" && slug.c
     name,
     image
   },
+  seoTitle,
+  seoDescription,
+  ogImage,
   body
 }`);
 

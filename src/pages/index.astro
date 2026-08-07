@@ -559,24 +559,21 @@ const recentArticles = articles.slice(0, 3);
       }
 
       // Interactive Particles System
-      const canvas = document.getElementById('particles-canvas');
+      const canvas = document.getElementById('particles-canvas') as HTMLCanvasElement | null;
       if (canvas) {
         const ctx = canvas.getContext('2d');
         let width = 0, height = 0;
-        let particles = [];
         let mouse = { x: -1000, y: -1000, radius: 150 };
 
-        const initCanvas = () => {
-          width = canvas.width = window.innerWidth;
-          height = canvas.height = window.innerHeight;
-          particles = [];
-          // Increase particle count for a denser field
-          for (let i = 0; i < 120; i++) {
-            particles.push(new Particle());
-          }
-        };
-
         class Particle {
+          x: number;
+          y: number;
+          size: number;
+          baseX: number;
+          baseY: number;
+          density: number;
+          color: string;
+
           constructor() {
             this.x = Math.random() * width;
             this.y = Math.random() * height;
@@ -624,6 +621,18 @@ const recentArticles = articles.slice(0, 3);
             }
           }
         }
+
+        let particles: Particle[] = [];
+
+        const initCanvas = () => {
+          width = canvas.width = window.innerWidth;
+          height = canvas.height = window.innerHeight;
+          particles = [];
+          // Increase particle count for a denser field
+          for (let i = 0; i < 120; i++) {
+            particles.push(new Particle());
+          }
+        };
 
         const animate = () => {
           if (!ctx) return;

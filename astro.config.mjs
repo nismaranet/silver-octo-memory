@@ -12,8 +12,11 @@ const { PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET } = loadEnv(
   ""
 );
 
+import sitemap from '@astrojs/sitemap';
+
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://nismara.web.id',
   vite: {
     plugins: [tailwindcss()],
     optimizeDeps: {
@@ -22,7 +25,9 @@ export default defineConfig({
     }
   },
 
-  integrations: [react(), sanity({
+  integrations: [
+    react(),
+    sitemap(), sanity({
     projectId: PUBLIC_SANITY_PROJECT_ID || 'yi1d1k89',
     dataset: PUBLIC_SANITY_DATASET || 'production',
     apiVersion: '2024-03-15',

@@ -3,6 +3,7 @@ import { getArticle, urlFor, ARTICLES_QUERY } from '../../utils/sanity';
 import { sanityClient } from 'sanity:client';
 import Layout from '../../layouts/Layout.astro';
 import { PortableText } from 'astro-portabletext';
+import PortableTextImage from '../../components/PortableTextImage.astro';
 
 export async function getStaticPaths() {
   const articles = await sanityClient.fetch(ARTICLES_QUERY);
@@ -18,58 +19,78 @@ if (!article) {
   return Astro.redirect('/404');
 }
 
-const ogImage = article.mainImage ? urlFor(article.mainImage).width(1200).height(630).url() : undefined;
+const mainImageUrl = article.mainImage ? urlFor(article.mainImage).width(1200).height(630).url() : undefined;
+const customOgImageUrl = article.ogImage ? urlFor(article.ogImage).width(1200).height(630).url() : undefined;
+const finalOgImage = customOgImageUrl || mainImageUrl;
+
+// Generate an excerpt from the PortableText body
+const generatedExcerpt = article.body?.find((b: any) => b._type === 'block' && b.children && b.children.length > 0)
+  ?.children.map((c: any) => c.text).join('').substring(0, 160) + '...' 
+  || `Read ${article.title} on Nismara Group Publications.`;
+
+const finalDescription = article.seoDescription || generatedExcerpt;
+const finalTitle = article.seoTitle ? `${article.seoTitle} | Nismara Group` : `${article.title} | Nismara Group`;
+const authorName = article.author?.name || "Nismara Group";
 ---
 
 <Layout 
-  title={`${article.title} | Nismara Group`}
-  description={`Read ${article.title} on Nismara Group Publications.`}
-  image={ogImage}
+  title={finalTitle}
+  description={finalDescription}
+  image={finalOgImage}
   type="article"
+  author={authorName}
 >
-  <main class="max-w-3xl mx-auto px-4 py-12">
-    <a href="/articles" class="text-blue-600 hover:underline mb-8 inline-block">&larr; Back to Publications</a>
+<main class="bg-white dark:bg-[#050505] transition-colors min-h-screen pb-32">
+  <!-- Top Padding for Navbar -->
+  <div class="h-32 md:h-40"></div>
+  
+  <div class="max-w-3xl mx-auto px-6">
+    <a href="/articles" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors mb-12 inline-flex items-center gap-2 text-sm font-mono uppercase tracking-widest">&larr; Back to Publications</a>
     
-    <article class="prose lg:prose-xl">
-      <h1 class="text-4xl font-bold mb-6">{article.title}</h1>
+    <article class="prose lg:prose-xl prose-gray dark:prose-invert max-w-none">
+      <h1 class="text-4xl md:text-5xl font-light text-gray-900 dark:text-white tracking-tight mb-8 not-prose">{article.title}</h1>
       
-      <div class="flex items-center gap-4 mb-8 not-prose">
+      <div class="flex items-center gap-4 mb-12 not-prose">
         {article.author?.image && (
           <img 
             src={urlFor(article.author.image).width(48).height(48).url()} 
             alt={article.author.name}
-            class="w-12 h-12 rounded-full border border-gray-200 dark:border-gray-800"
+            class="w-12 h-12 rounded-full border border-gray-200 dark:border-gray-800 object-cover"
           />
         )}
         <div class="flex flex-col">
           {article.author?.name && (
-            <span class="text-gray-900 dark:text-white font-medium">{article.author.name}</span>
+            <span class="text-gray-900 dark:text-white font-medium text-sm">{article.author.name}</span>
           )}
           {article.publishedAt && (
-            <time class="text-sm text-gray-500 dark:text-gray-400 font-mono tracking-wide mt-1">
-              {new Date(article.publishedAt).toLocaleDateString('id-ID', { 
-                timeZone: 'Asia/Jakarta',
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-              })}
+            <time class="text-xs text-gray-500 dark:text-gray-400 font-mono tracking-widest uppercase mt-1">
+              {new Date(article.publishedAt).toLocaleDateString('en-CA').replace(/-/g, '.')}
             </time>
           )}
         </div>
       </div>
 
       {article.mainImage && (
-        <img 
-          src={urlFor(article.mainImage).width(1200).height(600).url()} 
-          alt={article.title}
-          class="w-full rounded-xl mb-12 shadow-md"
-        />
+        <div class="not-prose mb-16">
+          <img 
+            src={urlFor(article.mainImage).width(1200).height(600).url()} 
+            alt={article.title}
+            class="w-full rounded-2xl shadow-xl aspect-video object-cover"
+          />
+        </div>
       )}
 
-      <div class="mt-8 leading-relaxed text-gray-800">
-        <PortableText value={article.body} />
+      <div class="font-light leading-relaxed">
+        <PortableText 
+          value={article.body} 
+          components={{
+            type: {
+              image: PortableTextImage,
+            }
+          }}
+        />
       </div>
     </article>
-  </main>
+  </div>
+</main>
 </Layout>

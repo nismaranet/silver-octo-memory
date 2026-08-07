@@ -1,30 +1,21 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getArticles, urlFor } from '../../utils/sanity';
+import { getArticles } from '../../utils/sanity';
 
 const allArticles = await getArticles();
-const featuredArticle = allArticles.length > 0 ? allArticles[0] : null;
-const remainingArticles = allArticles.length > 1 ? allArticles.slice(1) : [];
 
-// Group remaining articles by category
-const categorizedArticles: Record<string, any[]> = {};
-const uncategorizedArticles: any[] = [];
-
-remainingArticles.forEach((article: any) => {
-  if (article.categories && article.categories.length > 0) {
-    const categoryTitle = article.categories[0].title;
-    if (!categorizedArticles[categoryTitle]) {
-      categorizedArticles[categoryTitle] = [];
-    }
-    categorizedArticles[categoryTitle].push(article);
-  } else {
-    uncategorizedArticles.push(article);
-  }
-});
+// Extract unique categories for the filter buttons
+const categories = Array.from(
+  new Set(
+    allArticles
+      .filter((a: any) => a.categories && a.categories.length > 0)
+      .map((a: any) => a.categories[0].title)
+  )
+);
 
 const formatDate = (dateString: string) => {
   if (!dateString) return 'No Date';
-  return new Date(dateString).toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: '2-digit' });
+  return new Date(dateString).toLocaleDateString('en-CA').replace(/-/g, '.');
 };
 ---
 
@@ -32,156 +23,189 @@ const formatDate = (dateString: string) => {
   <main class="bg-white dark:bg-[#050505] transition-colors min-h-screen pb-32">
     
     <!-- Top Padding for Navbar -->
-    <div class="h-24"></div>
+    <div class="h-32 md:h-40"></div>
 
-    {allArticles.length === 0 ? (
-      <div class="max-w-4xl mx-auto px-6 py-32 text-center">
-        <h1 class="text-5xl font-light text-gray-900 dark:text-white tracking-tight mb-4">Archive</h1>
-        <p class="text-gray-400 font-light tracking-wide text-lg">No entries found in the archive.</p>
+    <div class="max-w-4xl mx-auto px-6">
+      
+      <!-- Header -->
+      <div class="mb-12 md:mb-16 reveal">
+        <p class="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-4">News & Updates</p>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-light text-gray-900 dark:text-white tracking-tight">Articles</h1>
       </div>
-    ) : (
-      <>
-        <!-- Featured Article Hero Banner -->
-        {featuredArticle && (
-          <section class="px-4 md:px-6 mb-24 reveal">
-            <div class="max-w-[1400px] mx-auto">
-              <div class="flex items-end justify-between mb-8">
-                <div>
-                  <p class="text-[10px] font-mono uppercase tracking-widest text-primary-600 dark:text-primary-500 mb-2">Featured Story</p>
-                  <h1 class="text-4xl md:text-5xl lg:text-6xl font-light text-gray-900 dark:text-white tracking-tight">Articles</h1>
-                </div>
-              </div>
 
-              <a href={`/articles/${featuredArticle.slug?.current || '#'}`} class="group block relative w-full h-[60vh] md:h-[70vh] rounded-3xl overflow-hidden shadow-2xl">
-                <!-- Background Image -->
-                {featuredArticle.mainImage ? (
-                  <img 
-                    src={urlFor(featuredArticle.mainImage).width(1600).height(900).url()} 
-                    alt={featuredArticle.title} 
-                    class="absolute inset-0 w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out"
-                  />
-                ) : (
-                  <div class="absolute inset-0 w-full h-full bg-gray-200 dark:bg-gray-800"></div>
-                )}
-                
-                <!-- Overlay Gradient -->
-                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-                
-                <!-- Content -->
-                <div class="absolute bottom-0 left-0 right-0 p-8 md:p-12 lg:p-16 flex flex-col items-start justify-end">
-                  <div class="flex items-center gap-4 mb-4">
-                    {featuredArticle.categories && featuredArticle.categories.length > 0 && (
-                      <span class="px-3 py-1 bg-primary-600 text-white text-[10px] font-bold uppercase tracking-widest rounded-full">
-                        {featuredArticle.categories[0].title}
+      <!-- Filters -->
+      <div class="flex flex-wrap items-center gap-3 md:gap-4 mb-12 md:mb-16 reveal delay-100">
+        <button data-filter="all" class="filter-btn px-5 md:px-6 py-1.5 md:py-2 text-xs md:text-sm tracking-widest uppercase rounded-full transition-all text-white bg-green-700 dark:bg-green-600 font-bold border-transparent">
+          All
+        </button>
+        {categories.map((category) => (
+          <button data-filter={category} class="filter-btn px-5 md:px-6 py-1.5 md:py-2 text-xs md:text-sm tracking-widest uppercase rounded-full transition-all text-gray-600 dark:text-gray-300 font-medium border border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600">
+            {category as string}
+          </button>
+        ))}
+      </div>
+
+      <!-- Articles List -->
+      {allArticles.length === 0 ? (
+        <div class="text-center py-20 border-t border-gray-100 dark:border-gray-900">
+          <p class="text-gray-400 font-light tracking-wide">No entries found in the archive.</p>
+        </div>
+      ) : (
+        <div class="flex flex-col border-t border-black/5 dark:border-white/5">
+          <ul id="articles-list" class="flex flex-col">
+            {allArticles.map((article: any, index: number) => (
+              <li 
+                class="article-item border-b border-black/5 dark:border-white/5 reveal delay-100 transition-opacity duration-300" 
+                data-category={article.categories && article.categories.length > 0 ? article.categories[0].title : 'uncategorized'}
+              >
+                <a href={`/articles/${article.slug.current}`} class="group flex flex-col md:flex-row md:items-center py-6 md:py-8 gap-4 md:gap-8 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] px-4 -mx-4 transition-colors duration-300 rounded-lg">
+                  
+                  <div class="flex items-center gap-6 shrink-0 md:w-[280px]">
+                    <time class="text-xs md:text-sm font-mono text-gray-500 dark:text-gray-400 tracking-widest shrink-0 w-24">
+                      {formatDate(article.publishedAt)}
+                    </time>
+                    {article.categories && article.categories.length > 0 && (
+                      <span class="text-[10px] md:text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-white/5 px-3 py-1 rounded-md whitespace-nowrap">
+                        {article.categories[0].title}
                       </span>
                     )}
-                    <span class="text-xs font-mono tracking-widest text-gray-300 uppercase">
-                      {formatDate(featuredArticle.publishedAt)}
-                    </span>
                   </div>
-                  <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tighter leading-tight group-hover:text-primary-400 transition-colors max-w-4xl">
-                    {featuredArticle.title}
-                  </h2>
-                </div>
-              </a>
-            </div>
-          </section>
-        )}
-
-        <!-- Categorized Sections -->
-        <div class="max-w-7xl mx-auto px-6 space-y-24">
-          
-          {Object.entries(categorizedArticles).map(([category, items], categoryIndex) => (
-            <section class={`reveal delay-${(categoryIndex % 3) * 100}`}>
-              <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 pb-6 mb-12">
-                <h3 class="text-3xl md:text-4xl font-light text-gray-900 dark:text-white tracking-tight">
-                  <span class="font-bold">{category}</span> Archive
-                </h3>
-                <span class="text-xs font-mono tracking-widest text-gray-400 uppercase hidden sm:block">
-                  {items.length} {items.length === 1 ? 'Article' : 'Articles'}
-                </span>
-              </div>
-              
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-                {items.map((article: any, index: number) => (
-                  <article class="group flex flex-col">
-                    <a href={`/articles/${article.slug?.current || '#'}`} class="block aspect-[4/3] w-full rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-900 mb-6">
-                      {article.mainImage ? (
-                        <img 
-                          src={urlFor(article.mainImage).width(800).height(600).url()} 
-                          alt={article.title} 
-                          class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
-                        />
-                      ) : (
-                        <div class="w-full h-full flex items-center justify-center text-xs text-gray-400 font-mono uppercase tracking-widest">
-                          No Image
-                        </div>
-                      )}
-                    </a>
-                    
-                    <div class="flex items-center gap-3 mb-3">
-                      <span class="w-6 h-[1px] bg-primary-600 dark:bg-primary-500"></span>
-                      <time class="text-[10px] font-mono tracking-widest text-gray-500 uppercase">
-                        {formatDate(article.publishedAt)}
-                      </time>
-                    </div>
-                    
-                    <h4 class="text-xl md:text-2xl font-medium text-gray-900 dark:text-white leading-snug tracking-tight group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                      <a href={`/articles/${article.slug?.current || '#'}`} class="focus:outline-none">
-                        {article.title}
-                      </a>
-                    </h4>
-                  </article>
-                ))}
-              </div>
-            </section>
-          ))}
-          
-          <!-- Uncategorized Section -->
-          {uncategorizedArticles.length > 0 && (
-            <section class="reveal">
-              <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 pb-6 mb-12">
-                <h3 class="text-3xl md:text-4xl font-light text-gray-900 dark:text-white tracking-tight">
-                  <span class="font-bold">Other</span> Updates
-                </h3>
-              </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-                {uncategorizedArticles.map((article: any) => (
-                  <article class="group flex flex-col">
-                    <a href={`/articles/${article.slug?.current || '#'}`} class="block aspect-[4/3] w-full rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-900 mb-6">
-                      {article.mainImage ? (
-                        <img 
-                          src={urlFor(article.mainImage).width(800).height(600).url()} 
-                          alt={article.title} 
-                          class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
-                        />
-                      ) : (
-                        <div class="w-full h-full flex items-center justify-center text-xs text-gray-400 font-mono uppercase tracking-widest">
-                          No Image
-                        </div>
-                      )}
-                    </a>
-                    
-                    <div class="flex items-center gap-3 mb-3">
-                      <span class="w-6 h-[1px] bg-gray-300 dark:bg-gray-700"></span>
-                      <time class="text-[10px] font-mono tracking-widest text-gray-500 uppercase">
-                        {formatDate(article.publishedAt)}
-                      </time>
-                    </div>
-                    
-                    <h4 class="text-xl md:text-2xl font-medium text-gray-900 dark:text-white leading-snug tracking-tight group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                      <a href={`/articles/${article.slug?.current || '#'}`} class="focus:outline-none">
-                        {article.title}
-                      </a>
-                    </h4>
-                  </article>
-                ))}
-              </div>
-            </section>
-          )}
-
+                  
+                  <h3 class="text-base md:text-lg font-normal text-gray-900 dark:text-white leading-relaxed group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                    {article.title}
+                  </h3>
+                  
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
-      </>
-    )}
+      )}
+
+      <!-- Pagination -->
+      {allArticles.length > 0 && (
+        <div id="pagination-controls" class="flex items-center justify-center gap-2 md:gap-3 mt-16 reveal delay-300">
+          <!-- Injected by JavaScript -->
+        </div>
+      )}
+
+    </div>
   </main>
 </Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const articleItems = document.querySelectorAll('.article-item');
+    const paginationControls = document.getElementById('pagination-controls');
+    
+    let currentCategory = 'all';
+    let currentPage = 1;
+    const itemsPerPage = 8;
+    
+    // Define active and inactive tailwind classes for the filter buttons
+    const activeClasses = ['text-white', 'bg-green-700', 'dark:bg-green-600', 'font-bold', 'border-transparent'];
+    const inactiveClasses = ['text-gray-600', 'dark:text-gray-300', 'font-medium', 'border', 'border-gray-200', 'dark:border-gray-800', 'hover:border-gray-400', 'dark:hover:border-gray-600'];
+
+    function renderArticles() {
+      // 1. Filter articles based on category
+      let filteredArticles: Element[] = [];
+      articleItems.forEach((item) => {
+        const itemCategory = item.getAttribute('data-category');
+        if (currentCategory === 'all' || itemCategory === currentCategory) {
+          filteredArticles.push(item);
+        } else {
+          (item as HTMLElement).style.display = 'none';
+        }
+      });
+
+      // 2. Calculate pagination
+      const totalPages = Math.ceil(filteredArticles.length / itemsPerPage);
+      if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+
+      // 3. Show/hide articles for the current page
+      filteredArticles.forEach((item, index) => {
+        const el = item as HTMLElement;
+        if (index >= startIndex && index < endIndex) {
+          el.style.display = 'block';
+          // Reset opacity for a slight fade effect
+          el.style.opacity = '0';
+          setTimeout(() => el.style.opacity = '1', 20);
+        } else {
+          el.style.display = 'none';
+        }
+      });
+
+      // 4. Render pagination buttons
+      renderPagination(totalPages);
+    }
+
+    function renderPagination(totalPages: number) {
+      if (!paginationControls) return;
+      paginationControls.innerHTML = '';
+
+      if (totalPages <= 1) return; // Hide pagination if only 1 page
+
+      const createBtn = (text: string, disabled: boolean, isCurrent: boolean, onClick: () => void) => {
+        const btn = document.createElement('button');
+        btn.innerHTML = text;
+        
+        let className = 'w-10 h-10 flex items-center justify-center text-xs rounded transition-colors ';
+        if (isCurrent) {
+          className += 'font-bold text-white bg-green-700 dark:bg-green-600';
+        } else if (disabled) {
+          className += 'text-gray-400 border border-transparent cursor-not-allowed';
+        } else {
+          className += 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 cursor-pointer';
+        }
+        
+        btn.className = className;
+        
+        if (!disabled && !isCurrent) {
+          btn.addEventListener('click', onClick);
+        }
+        return btn;
+      };
+
+      // Prev buttons
+      paginationControls.appendChild(createBtn('&laquo;', currentPage === 1, false, () => { currentPage = 1; renderArticles(); }));
+      paginationControls.appendChild(createBtn('&lsaquo;', currentPage === 1, false, () => { currentPage--; renderArticles(); }));
+      
+      // Page numbers
+      for (let i = 1; i <= totalPages; i++) {
+        paginationControls.appendChild(createBtn(i.toString(), false, currentPage === i, () => { currentPage = i; renderArticles(); }));
+      }
+      
+      // Next buttons
+      paginationControls.appendChild(createBtn('&rsaquo;', currentPage === totalPages, false, () => { currentPage++; renderArticles(); }));
+      paginationControls.appendChild(createBtn('&raquo;', currentPage === totalPages, false, () => { currentPage = totalPages; renderArticles(); }));
+    }
+
+    // Handle filter button clicks
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        // Reset all buttons to inactive state
+        filterBtns.forEach(b => {
+          b.classList.remove(...activeClasses);
+          b.classList.add(...inactiveClasses);
+        });
+        
+        // Set clicked button to active state
+        const targetBtn = e.currentTarget as HTMLButtonElement;
+        targetBtn.classList.remove(...inactiveClasses);
+        targetBtn.classList.add(...activeClasses);
+        
+        currentCategory = targetBtn.getAttribute('data-filter') || 'all';
+        currentPage = 1; // Always return to first page on category change
+        renderArticles();
+      });
+    });
+
+    // Initialize list
+    renderArticles();
+  });
+</script>

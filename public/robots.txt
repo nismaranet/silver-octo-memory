@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nismara.web.id/sitemap-index.xml

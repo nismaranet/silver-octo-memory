@@ -9,14 +9,21 @@ export interface Props {
   description?: string;
   image?: string;
   type?: string;
+  author?: string;
+  keywords?: string[];
 }
 
-const { title, description, image, type } = Astro.props;
+const { title, description, image, type, author, keywords } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
 	<head>
-		<SEO title={title} description={description} image={image} type={type} />
+		<SEO title={title} description={description} image={image} type={type} author={author} keywords={keywords} />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <script is:inline>
       const theme = (() => {
         if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {

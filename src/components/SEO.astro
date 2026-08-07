@@ -5,6 +5,8 @@ export interface Props {
   image?: string;
   url?: string;
   type?: string;
+  author?: string;
+  keywords?: string[];
 }
 
 const {
@@ -12,7 +14,9 @@ const {
   description = "Nismara Group adalah salah satu komunitas terbesar pencinta games simulasi di Indonesia. Kami menjadi platform bagi para simmers untuk terhubung, berbagi, dan menikmati hobi bersama.",
   image = "/favicon.svg", // Fallback image
   url = Astro.url.href,
-  type = "website"
+  type = "website",
+  author = "Nismara Group",
+  keywords = ["Nismara Group", "Virtual Community", "Sim Racing", "ETS2 Indonesia"]
 } = Astro.props;
 
 // Ensure full URL for image if it's relative
@@ -31,7 +35,10 @@ const fullImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
-<meta name="author" content="Nismara Group" />
+<meta name="author" content={author} />
+{keywords && keywords.length > 0 && (
+  <meta name="keywords" content={keywords.join(', ')} />
+)}
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={type} />
@@ -39,7 +46,7 @@ const fullImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={fullImage} />
-<meta property="og:site_name" content="Nismara Group" />
+<meta property="og:site_name" content={author !== "Nismara Group" ? author : "Nismara Group"} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
