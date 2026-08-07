@@ -1,0 +1,660 @@
+---
+import { getArticles, urlFor } from '../utils/sanity';
+import Layout from '../layouts/Layout.astro';
+
+const articles = await getArticles();
+const recentArticles = articles.slice(0, 3);
+---
+
+<Layout>
+  <!-- Hero Section (Asymmetric & Minimal) -->
+  <section class="relative pt-32 pb-24 lg:pt-48 lg:pb-32 overflow-hidden bg-white dark:bg-slate-950 transition-colors duration-500">
+    <!-- Subtle Grid Background -->
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] dark:bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] pointer-events-none"></div>
+    
+    <div class="max-w-7xl mx-auto px-6 relative flex flex-col lg:flex-row items-center justify-between">
+      
+      <!-- Left Content -->
+      <div class="lg:w-2/3 reveal">
+        <div class="inline-flex items-center gap-2 px-3 py-1 hairline-border rounded-full text-xs font-medium tracking-widest uppercase mb-8 text-gray-500 dark:text-gray-400">
+          <span class="w-1.5 h-1.5 rounded-full bg-primary-600 animate-pulse"></span>
+          Nismara Group
+        </div>
+        
+        <h1 class="text-6xl sm:text-7xl lg:text-8xl font-black tracking-tighter text-gray-900 dark:text-white mb-8 leading-[0.9]">
+          Simulate.<br />
+          Connect.<br />
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-gray-400 dark:from-primary-400 dark:to-gray-600">Evolve.</span>
+        </h1>
+        
+        <p class="text-xl text-gray-600 dark:text-gray-400 max-w-lg mb-12 font-light leading-relaxed reveal delay-100">
+          Nismara Group Menghidupkan dunia simulasi, membangun koneksi antar anggota komunitas, dan terus berkembang bersama.
+        </p>
+        
+        <div class="flex items-center gap-6 reveal delay-200">
+          <a href="#about" class="group relative px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-medium overflow-hidden transition-all hover:shadow-2xl">
+            <span class="relative z-10 flex items-center gap-2">
+              Discover
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </span>
+          </a>
+          <a href="/about-us" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium">
+            About us
+          </a>
+        </div>
+      </div>
+      
+      <!-- Right Ornamental Vertical Text -->
+      <div class="hidden lg:flex lg:w-1/3 justify-end items-center reveal delay-300">
+        <div class="flex items-center gap-6 opacity-20 dark:opacity-30">
+          <p class="vertical-text text-5xl font-black tracking-widest text-gray-900 dark:text-white uppercase">
+            Nismara
+          </p>
+          <div class="w-[1px] h-64 bg-gray-900 dark:bg-white"></div>
+          <p class="vertical-text text-xl font-light tracking-[0.3em] text-gray-900 dark:text-white uppercase">
+            Est. 2024
+          </p>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- About Nismara Section -->
+  <section id="about" class="relative py-24 bg-gray-50 dark:bg-[#0a0f1a] transition-colors duration-500 hairline-border border-l-0 border-r-0 overflow-hidden">
+    <!-- Nismara Background Logo -->
+    <img src="/nismara.svg" alt="" class="absolute top-0 right-0 w-[600px] h-auto opacity-10 dark:opacity-[0.02] invert dark:invert-0 pointer-events-none transform translate-x-1/4 -translate-y-1/4" aria-hidden="true" />
+    
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 reveal">
+        <div class="max-w-xl">
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 tracking-tight">Apa itu Nismara?</h2>
+        </div>
+      </div>
+      
+      <!-- About Us Content -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 reveal delay-100">
+        
+        <!-- Left Column: Introduction & CTA -->
+        <div class="lg:col-span-5 flex flex-col justify-between">
+          <div>
+            <p class="text-lg md:text-xl text-gray-700 dark:text-gray-300 font-light leading-relaxed mb-8">
+              Nismara Group adalah sebuah sebuah grup perusahaan virtual yang dibentuk untuk menaungi banyak perusahaan virtual lain dibawahnya seperti Nismara Transport, Nismara Airlines, Nismara Racing untuk divisi balap dan lainnya. Kami membentuk ini dikarenakan kecintaan kami kepada permainan simulasi.
+            </p>
+            <p class="text-gray-500 dark:text-gray-400 font-light leading-relaxed mb-12">
+              Lebih dari sekadar bermain, kami membangun ekosistem di mana kreativitas, kolaborasi, dan teknologi menyatu menjadi sebuah harmoni.
+            </p>
+          </div>
+          
+          <a href="/about" class="inline-flex items-center gap-4 text-sm font-bold tracking-widest uppercase text-gray-900 dark:text-white group w-fit">
+            <span class="border-b border-gray-900 dark:border-white pb-1 group-hover:text-primary-600 group-hover:border-primary-600 transition-colors">
+              Kenali Kami Lebih Jauh
+            </span>
+            <svg class="w-5 h-5 transform group-hover:translate-x-2 transition-transform text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+          </a>
+        </div>
+        
+        <!-- Right Column: Visi & Misi -->
+        <div class="lg:col-span-7 flex flex-col gap-12">
+          
+          <!-- Visi -->
+          <div class="group">
+            <h3 class="text-xs font-mono tracking-[0.2em] uppercase text-primary-600 dark:text-primary-400 mb-6 flex items-center gap-4">
+              <span class="w-8 h-[1px] bg-primary-600/30 dark:bg-primary-400/30 group-hover:w-16 transition-all duration-500"></span>
+              Visi
+            </h3>
+            <p class="text-2xl md:text-3xl font-medium text-gray-900 dark:text-white leading-tight tracking-tight">
+              Menjadi wadah ekosistem virtual terdepan yang menaungi berbagai divisi simulasi dan gaming demi menyatukan para penggemar dalam satu atap yang solid.
+            </p>
+          </div>
+          
+          <div class="w-full h-[1px] bg-black/10 dark:bg-white/10"></div>
+          
+          <!-- Misi -->
+          <div class="group">
+            <h3 class="text-xs font-mono tracking-[0.2em] uppercase text-primary-600 dark:text-primary-400 mb-6 flex items-center gap-4">
+              <span class="w-8 h-[1px] bg-primary-600/30 dark:bg-primary-400/30 group-hover:w-16 transition-all duration-500"></span>
+              Misi
+            </h3>
+            <ul class="space-y-6">
+              <li class="flex items-start gap-6">
+                <span class="text-xs font-mono text-gray-400 mt-1">01</span>
+                <p class="text-lg text-gray-700 dark:text-gray-300 font-light leading-relaxed">
+                  Membangun dan mengembangkan perusahaan virtual profesional seperti Nismara Transport, Airlines, dan Racing untuk menghadirkan pengalaman bermain simulasi yang realistis.
+                </p>
+              </li>
+              <li class="flex items-start gap-6">
+                <span class="text-xs font-mono text-gray-400 mt-1">02</span>
+                <p class="text-lg text-gray-700 dark:text-gray-300 font-light leading-relaxed">
+                  Memfasilitasi ruang bermain komunitas melalui sub-divisi Nismara World di berbagai platform game seperti Minecraft (Rice Kencur), GTA V (BLCK), dan Farming Simulator.
+                </p>
+              </li>
+              <li class="flex items-start gap-6">
+                <span class="text-xs font-mono text-gray-400 mt-1">03</span>
+                <p class="text-lg text-gray-700 dark:text-gray-300 font-light leading-relaxed">
+                  Mendorong kreativitas dan persaudaraan antar anggota melalui integrasi teknologi web dan manajemen divisi yang terstruktur dengan baik.
+                </p>
+              </li>
+            </ul>
+          </div>
+          
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision Section (Custom Dark Layout) -->
+  <section class="relative min-h-[100vh] py-32 overflow-hidden bg-[#0d1117] flex items-center mt-24 lg:mt-0">
+    <!-- Diagonal background element -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+      <div class="absolute w-[200%] h-[1px] bg-white/10 transform -rotate-[20deg] top-1/2 -translate-y-1/2 -left-1/2"></div>
+    </div>
+    
+    <div class="max-w-[1400px] w-full mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Left Column: Large Image + Badge -->
+      <div class="lg:col-span-5 relative reveal delay-100 flex flex-col items-start xl:-ml-12">
+        <div class="p-4 bg-white/5 backdrop-blur-sm shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/10 transform -rotate-3 hover:rotate-0 transition-transform duration-700 w-full max-w-lg z-20 relative">
+          <img src="/images/sim-character.png" alt="Character" class="w-full aspect-[4/5] object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-500"/>
+        </div>
+        <p class="font-mono text-[10px] text-white/50 mt-4 tracking-widest uppercase ml-4">01 / Character</p>
+        
+        <!-- Bottom Badge (Relative to left column) -->
+        <div class="absolute -bottom-12 -right-4 lg:-right-16 w-32 h-32 rounded-full border border-white/20 flex flex-col items-center justify-center text-[9px] font-mono tracking-widest text-white/50 animate-[spin_15s_linear_infinite] hover:animate-none cursor-pointer hover:border-white/50 transition-colors z-30 bg-[#0d1117]/80 backdrop-blur-sm">
+          <span class="mb-1">NISMARA</span>
+          <span class="text-[#c3ff00] text-xl leading-none">✦</span>
+          <span class="mt-1">WORLDS</span>
+        </div>
+      </div>
+
+      <!-- Center & Right Columns: Text and smaller images -->
+      <div class="lg:col-span-7 flex flex-col gap-16 mt-24 lg:mt-0">
+        
+        <!-- Center Text -->
+        <div class="reveal z-20">
+          <p class="font-mono text-[10px] md:text-xs tracking-widest text-white/60 mb-6 uppercase">One Idea / Many Expressions</p>
+          <h1 class="text-5xl sm:text-7xl lg:text-[90px] xl:text-[100px] leading-[0.95] font-medium text-white tracking-tight mb-8">
+            We don't make<br />
+            assets. We<br />
+            build <span class="font-serif italic text-[#c3ff00]">worlds.</span>
+          </h1>
+        </div>
+
+        <!-- Right side images and text grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-end reveal delay-200 z-10">
+          
+          <!-- Text Paragraph -->
+          <div class="order-2 sm:order-1 self-end pb-8 lg:pb-0 z-30 bg-[#0d1117]/60 lg:bg-transparent p-4 lg:p-0 rounded backdrop-blur-sm lg:backdrop-blur-none">
+            <p class="text-sm md:text-base text-white/70 font-light leading-relaxed max-w-sm">
+              Every frame belongs to one larger feeling—recognisable at a glance, impossible to reduce to a template.
+            </p>
+          </div>
+          
+          <!-- Image 2 & 3 wrapper -->
+          <div class="order-1 sm:order-2 flex flex-col gap-8 relative">
+             <!-- Image 2 (Landscape) -->
+            <div class="transform rotate-2 hover:rotate-0 transition-transform duration-700 w-full sm:-mr-8 xl:-mr-16 z-20 relative">
+              <div class="p-2 bg-white/5 backdrop-blur-sm shadow-2xl border border-white/10">
+                <img src="/images/sim-atmosphere.png" alt="Atmosphere" class="w-full aspect-video object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-500"/>
+              </div>
+              <p class="font-mono text-[9px] text-white/50 mt-2 tracking-widest uppercase ml-2">02 / Atmosphere</p>
+            </div>
+
+            <!-- Image 3 (Portrait) -->
+            <div class="transform -rotate-2 hover:rotate-0 transition-transform duration-700 w-3/4 ml-auto sm:-mb-16 z-10 relative">
+              <div class="p-2 bg-white/5 backdrop-blur-sm shadow-2xl border border-white/10">
+                <!-- Placeholder using existing image, replace later -->
+                <img src="/images/sim-character.png" alt="Action" class="w-full aspect-[3/4] object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-500"/>
+              </div>
+              <p class="font-mono text-[9px] text-white/50 mt-2 tracking-widest uppercase ml-2">03 / Action</p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- Scrollytelling Showcase Section (Horizontal Scroll) -->
+  <section id="showcase-horizontal" class="relative h-[400vh] bg-[#050505] text-white">
+    <div class="sticky top-0 h-screen w-full overflow-hidden">
+      <!-- Interactive Background Canvas -->
+      <canvas id="particles-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+      <!-- Track -->
+      <div id="horizontal-track" class="flex w-[300vw] h-full will-change-transform transition-transform ease-out duration-75 relative z-10">
+        
+        <!-- Slide 1: Transport -->
+        <div class="w-screen h-full flex items-center justify-center relative flex-shrink-0">
+          <div class="max-w-[1400px] w-full mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="pr-0 lg:pr-12">
+              <p class="text-[#c3ff00] font-mono text-xs md:text-sm tracking-widest uppercase mb-4">01 / Logistics & Transit</p>
+              <h2 class="text-5xl md:text-6xl font-bold mb-6 text-white tracking-tight">Nismara Transport</h2>
+              <p class="text-white/60 text-lg md:text-xl font-light leading-relaxed max-w-lg">
+                Menyediakan solusi mobilitas yang andal dan efisien. Nismara Transport adalah pilar pergerakan logistik modern yang menghubungkan berbagai titik krusial di seluruh negeri dengan kecepatan dan keamanan tanpa kompromi.
+              </p>
+            </div>
+            <div class="w-full aspect-[4/5] lg:aspect-square rounded overflow-hidden shadow-2xl bg-white/5 border border-white/10">
+              <img src="/images/nismara-transport.jpg" class="w-full h-full object-cover" alt="Nismara Transport" />
+            </div>
+          </div>
+        </div>
+        
+        <!-- Slide 2: Racing -->
+        <div class="w-screen h-full flex items-center justify-center relative flex-shrink-0">
+          <div class="max-w-[1400px] w-full mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="pr-0 lg:pr-12">
+              <p class="text-[#c3ff00] font-mono text-xs md:text-sm tracking-widest uppercase mb-4">02 / Adrenaline & Precision</p>
+              <h2 class="text-5xl md:text-6xl font-bold mb-6 text-white tracking-tight">Nismara Racing</h2>
+              <p class="text-white/60 text-lg md:text-xl font-light leading-relaxed max-w-lg">
+                Mendefinisikan ulang batasan kecepatan. Divisi Racing kami menggabungkan rekayasa teknologi tinggi dan semangat kompetisi untuk menciptakan mesin-mesin juara di lintasan balap internasional.
+              </p>
+            </div>
+            <div class="w-full aspect-[4/5] lg:aspect-square rounded overflow-hidden shadow-2xl bg-white/5 border border-white/10">
+              <img src="/images/nismara-racing.webp" class="w-full h-full object-cover" alt="Nismara Racing" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3: Airlines -->
+        <div class="w-screen h-full flex items-center justify-center relative flex-shrink-0">
+          <div class="max-w-[1400px] w-full mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="pr-0 lg:pr-12">
+              <p class="text-[#c3ff00] font-mono text-xs md:text-sm tracking-widest uppercase mb-4">03 / Aviation & Comfort</p>
+              <h2 class="text-5xl md:text-6xl font-bold mb-6 text-white tracking-tight">Nismara Airlines</h2>
+              <p class="text-white/60 text-lg md:text-xl font-light leading-relaxed max-w-lg">
+                Menaklukkan langit dengan kemewahan dan keselamatan. Nismara Airlines memberikan pengalaman terbang berkelas dunia, memadukan pelayanan superior dengan armada aviasi generasi terbaru.
+              </p>
+            </div>
+            <div class="w-full aspect-[4/5] lg:aspect-square rounded overflow-hidden shadow-2xl bg-white/5 border border-white/10">
+              <img src="/images/nismara-airlines.webp" class="w-full h-full object-cover" alt="Nismara Airlines" />
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- Marquee Banner (Ticker) -->
+  <div class="w-full bg-[#f3f4f6] dark:bg-[#0c1017] overflow-hidden py-4 border-b border-black/5 dark:border-white/5">
+    <div class="flex whitespace-nowrap w-max animate-marquee">
+      <!-- First Block -->
+      <div class="flex items-center space-x-12 px-6">
+        {Array.from({ length: 20 }).map(() => (
+          <span class="text-sm md:text-base font-light tracking-[0.3em] text-black/40 dark:text-white/40 uppercase">
+            Nismara Group
+          </span>
+        ))}
+      </div>
+      <!-- Second Block (Duplicate for seamless loop) -->
+      <div class="flex items-center space-x-12 px-6">
+        {Array.from({ length: 20 }).map(() => (
+          <span class="text-sm md:text-base font-light tracking-[0.3em] text-black/40 dark:text-white/40 uppercase">
+            Nismara Group
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Editorial Impact Section (Axis Inspired) -->
+  <section class="relative bg-[#f4f4f0] dark:bg-[#0a0f1a] overflow-hidden pt-32 pb-32 transition-colors duration-500">
+    <!-- Grid Lines (Background) -->
+    <div class="absolute inset-0 pointer-events-none z-0 flex justify-center">
+      <!-- Horizontal line -->
+      <div class="absolute top-[20%] lg:top-[30%] w-full h-[1px] bg-black/10 dark:bg-white/10"></div>
+      <!-- Vertical line -->
+      <div class="absolute top-0 bottom-0 left-6 md:left-[15%] w-[1px] bg-black/10 dark:bg-white/10"></div>
+      <!-- Crosshair dot on intersection -->
+      <div class="absolute top-[20%] lg:top-[30%] left-6 md:left-[15%] w-2 h-2 rounded-full border border-primary-600 bg-[#f4f4f0] dark:bg-[#0a0f1a] -translate-x-1/2 -translate-y-1/2"></div>
+    </div>
+
+    <div class="max-w-[1400px] mx-auto px-6 relative z-10">
+      
+      <!-- Center Graphic: Circle N + Wrapped text -->
+      <div class="flex flex-col items-center justify-center mb-6 lg:mb-10 reveal">
+        <div class="relative w-32 h-32 flex items-center justify-center">
+          <!-- Outer rotating text (SVG) -->
+          <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full animate-[spin_20s_linear_infinite] opacity-60 dark:opacity-40">
+            <path id="circlePath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="transparent" />
+            <text class="text-[10px] font-mono tracking-[0.2em] uppercase fill-gray-900 dark:fill-white font-bold">
+              <textPath href="#circlePath" startOffset="0%">CLARITY IN MOTION • FORM FOLLOWS MEANING •</textPath>
+            </text>
+          </svg>
+          <!-- Inner solid circle -->
+          <div class="w-16 h-16 bg-gray-900 dark:bg-white text-[#f4f4f0] dark:text-[#0a0f1a] rounded-full flex items-center justify-center relative overflow-hidden group cursor-pointer transition-transform duration-500 hover:scale-110 shadow-lg">
+             <!-- Slash line across the circle -->
+             <div class="absolute w-[150%] h-[2px] bg-primary-600 rotate-45 group-hover:rotate-[225deg] transition-transform duration-700 ease-in-out"></div>
+             <!-- Nismara SVG (Inverted in dark mode because the circle becomes white) -->
+             <img src="/nismara.svg" alt="Nismara Logo" class="w-8 h-8 object-contain relative z-10 dark:invert transition-transform duration-500 group-hover:scale-110" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Giant Header -->
+      <div class="text-center mb-32 reveal delay-100 flex flex-col items-center">
+        <div class="relative inline-block group cursor-default">
+          <h2 class="text-[18vw] md:text-[15vw] leading-[0.8] font-bold tracking-tighter text-primary-600 dark:text-primary-500 uppercase">
+            NISMARA
+          </h2>
+          <!-- "WORLD" Text -->
+          <div class="absolute -bottom-6 right-2 md:-bottom-8 md:-right-8 lg:-right-12 z-20">
+            <span class="text-4xl md:text-7xl lg:text-[6vw] font-bold italic tracking-wider text-transparent inline-block transition-all duration-300 group-hover:animate-wiggle" style="-webkit-text-stroke: 2px #ef4444; color: transparent;">
+              WORLD
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Grid Section -->
+      <div class="max-w-5xl mx-auto reveal delay-200">
+        <!-- Subheading -->
+        <div class="mb-12 text-center md:text-left">
+          <h3 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white tracking-tight leading-tight">
+            Vision creates<br/>
+            <span class="text-primary-600 dark:text-primary-500 italic font-serif">the future.</span>
+          </h3>
+        </div>
+
+        <!-- Games Collection Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal delay-100 mb-24">
+          <!-- Game 1: Minecraft -->
+          <div class="bg-[#f2f2f2] dark:bg-[#111111] rounded-[2rem] p-8 relative h-[500px] flex flex-col group overflow-hidden transition-colors border border-black/5 dark:border-white/5">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white z-10 relative">Minecraft</h3>
+            <div class="absolute inset-0 w-full h-full z-0 overflow-hidden">
+              <img src="/images/minecraft.webp" alt="Minecraft WIP" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 opacity-90 dark:opacity-90 mix-blend-multiply dark:mix-blend-screen" />
+            </div>
+            <div class="mt-auto relative z-10">
+              <span class="text-5xl md:text-6xl font-bold tracking-tighter text-gray-900 dark:text-white transition-colors duration-500 group-hover:text-primary-600 dark:group-hover:text-primary-400 block -ml-1">BUILD.</span>
+            </div>
+          </div>
+          <!-- Game 2: BLCK -->
+          <div class="bg-[#f2f2f2] dark:bg-[#111111] rounded-[2rem] p-8 relative h-[500px] flex flex-col group overflow-hidden transition-colors border border-black/5 dark:border-white/5">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white z-10 relative">BLCK</h3>
+            <div class="absolute inset-0 w-full h-full z-0 overflow-hidden">
+              <img src="/images/gta-v.jpg" alt="BLCK WIP" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 opacity-90 dark:opacity-90 mix-blend-multiply dark:mix-blend-screen" />
+            </div>
+            <div class="mt-auto relative z-10">
+              <span class="text-5xl md:text-6xl font-bold tracking-tighter text-gray-900 dark:text-white transition-colors duration-500 group-hover:text-gray-500 block -ml-1">HEIST.</span>
+            </div>
+          </div>
+          <!-- Game 3: Farming Simulator -->
+          <div class="bg-[#f2f2f2] dark:bg-[#111111] rounded-[2rem] p-8 relative h-[500px] flex flex-col group overflow-hidden transition-colors border border-black/5 dark:border-white/5">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white z-10 relative">Farming Simulator</h3>
+            <div class="absolute inset-0 w-full h-full z-0 overflow-hidden">
+              <img src="/images/farming-simulator.webp" alt="Farming Sim WIP" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 opacity-90 dark:opacity-90 mix-blend-multiply dark:mix-blend-screen" />
+            </div>
+            <div class="mt-auto relative z-10">
+              <span class="text-5xl md:text-6xl font-bold tracking-tighter text-gray-900 dark:text-white transition-colors duration-500 group-hover:text-primary-600 dark:group-hover:text-primary-400 block -ml-1">HARVEST.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Big Quote Section -->
+        <div class="border-t hairline-border pt-12 flex flex-col md:flex-row gap-4 md:gap-6 reveal delay-300">
+          <div class="text-5xl md:text-6xl text-primary-600 dark:text-primary-500 font-serif leading-[0.5] pt-4">“</div>
+          <div>
+            <h3 class="text-xl md:text-2xl font-light text-gray-900 dark:text-white tracking-tight leading-relaxed mb-6">
+              Hanya ada satu hal yang membuat sebuah mimpi mustahil diwujudkan:<br/>
+              ketakutan akan kegagalan.
+            </h3>
+            <p class="text-xs md:text-sm uppercase tracking-[0.2em] font-mono text-gray-500 dark:text-gray-400 font-semibold">
+              — Paulo Coelho
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Latest Publications (Japanese Minimalist Style) -->
+  <section id="publications" class="py-32 bg-white dark:bg-[#050505] transition-colors duration-500">
+    <div class="max-w-4xl mx-auto px-6">
+      
+      <div class="flex items-end justify-between mb-20 reveal">
+        <div>
+          <p class="text-[10px] font-mono uppercase tracking-widest text-primary-600 dark:text-primary-500 mb-4">Read & Discover</p>
+          <h2 class="text-4xl md:text-5xl font-light text-gray-900 dark:text-white tracking-tight">Articles</h2>
+        </div>
+        <a href="/articles" class="text-xs font-mono tracking-widest uppercase text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors pb-2 border-b border-transparent hover:border-gray-900 dark:hover:border-white">
+          View All
+        </a>
+      </div>
+      
+      {recentArticles.length === 0 ? (
+        <div class="text-center py-20 border-t border-black/10 dark:border-white/10">
+          <p class="text-gray-400 font-light tracking-wide">No entries found in the archive.</p>
+        </div>
+      ) : (
+        <div class="flex flex-col border-b border-black/10 dark:border-white/10">
+          {recentArticles.map((article: any, index: number) => (
+            <article class={`group border-t border-black/10 dark:border-white/10 py-10 md:py-16 flex flex-col md:flex-row md:items-center gap-8 md:gap-16 reveal delay-${(index % 3) * 100}`}>
+              
+              <!-- Content Column -->
+              <div class="flex-grow flex flex-col justify-center">
+                <div class="flex items-center gap-4 mb-6">
+                  {article.categories && article.categories.length > 0 && (
+                    <span class="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-primary-600 dark:text-primary-400">
+                      {article.categories[0].title}
+                    </span>
+                  )}
+                  <span class="w-8 h-[1px] bg-gray-300 dark:bg-gray-700"></span>
+                  <time class="text-[10px] md:text-xs font-mono tracking-widest text-gray-400 uppercase">
+                    {article.publishedAt ? new Date(article.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' }) : 'No Date'}
+                  </time>
+                </div>
+                
+                <h3 class="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 dark:text-white leading-[1.1] tracking-tight group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                  <a href={`/articles/${article.slug.current}`} class="block focus:outline-none">
+                    {article.title}
+                  </a>
+                </h3>
+              </div>
+              
+              <!-- Thumbnail Column -->
+              <div class="w-full md:w-[280px] lg:w-[360px] shrink-0 overflow-hidden bg-gray-100 dark:bg-[#0a0a0a] rounded-sm">
+                <a href={`/articles/${article.slug.current}`} class="block aspect-[4/3]">
+                  {article.mainImage ? (
+                    <img 
+                      src={urlFor(article.mainImage).width(800).height(600).url()} 
+                      alt={article.title} 
+                      class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
+                    />
+                  ) : (
+                    <div class="w-full h-full flex items-center justify-center">
+                      <span class="text-xs text-gray-400 uppercase tracking-widest font-mono">No Image</span>
+                    </div>
+                  )}
+                </a>
+              </div>
+              
+            </article>
+          ))}
+        </div>
+      )}
+      
+    </div>
+  </section>
+
+  <!-- Final CTA Section -->
+  <section class="py-32 md:py-48 bg-white dark:bg-[#050505] transition-colors relative overflow-hidden flex items-center justify-center">
+    
+    <!-- Elegant Architectural SVG Background (Slowly Rotating) -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] md:w-[1200px] md:h-[1200px] pointer-events-none text-black/10 dark:text-white/10 flex items-center justify-center">
+      <svg viewBox="0 0 200 200" class="absolute w-full h-full" style="animation: spin 120s linear infinite;">
+        <circle cx="100" cy="100" r="98" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="4 6" />
+        <circle cx="100" cy="100" r="75" fill="none" stroke="currentColor" stroke-width="0.25" />
+        <circle cx="100" cy="100" r="50" fill="none" stroke="currentColor" stroke-width="0.25" stroke-dasharray="2 4" />
+        <line x1="100" y1="0" x2="100" y2="200" stroke="currentColor" stroke-width="0.25" stroke-dasharray="1 3" />
+        <line x1="0" y1="100" x2="200" y2="100" stroke="currentColor" stroke-width="0.25" stroke-dasharray="1 3" />
+        <circle cx="100" cy="25" r="1.5" fill="currentColor" />
+      </svg>
+      <svg viewBox="0 0 200 200" class="absolute w-[60%] h-[60%]" style="animation: spin 90s linear infinite reverse;">
+        <rect x="50" y="50" width="100" height="100" fill="none" stroke="currentColor" stroke-width="0.25" transform="rotate(45 100 100)" />
+        <circle cx="100" cy="100" r="70" fill="none" stroke="currentColor" stroke-width="0.25" stroke-dasharray="1 8" />
+      </svg>
+    </div>
+
+    <!-- Subtle Background Glow -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary-600/5 dark:bg-primary-500/10 rounded-full blur-[100px] pointer-events-none z-0"></div>
+    
+    <div class="max-w-4xl mx-auto px-6 text-center reveal relative z-10">
+      <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gray-50 dark:bg-white/[0.02] mb-12 border hairline-border shadow-sm">
+        <img src="/nismara.svg" alt="Nismara Logo" class="w-10 h-10 object-contain invert dark:invert-0 opacity-80" />
+      </div>
+      <h2 class="text-5xl md:text-7xl lg:text-[6vw] font-bold tracking-tighter text-gray-900 dark:text-white leading-[0.9] mb-8 uppercase">
+        Ready to Join?
+      </h2>
+      <p class="text-lg md:text-xl text-gray-500 dark:text-gray-400 font-light mb-16 max-w-2xl mx-auto leading-relaxed">
+        Mari bergabung bersama ekosistem simulasi virtual kami. Kembangkan karir, cari teman baru, dan ukir pengalaman konvoi tak terlupakan bersama Nismara Group.
+      </p>
+      <a href="/join-us" class="group inline-flex items-center justify-center px-10 py-5 text-xs font-bold tracking-[0.2em] uppercase text-white dark:text-gray-900 bg-gray-900 dark:bg-white rounded-full transition-all duration-500 hover:bg-primary-600 dark:hover:bg-primary-500 hover:text-white hover:scale-105 hover:shadow-2xl hover:shadow-primary-600/30">
+        Bergabung Sekarang
+        <svg class="w-4 h-4 ml-3 transform group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+      </a>
+    </div>
+  </section>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Horizontal Scrollytelling Logic
+      const section = document.getElementById('showcase-horizontal');
+      const track = document.getElementById('horizontal-track');
+      
+      if (section && track) {
+        let isScrolling = false;
+        
+        const handleScroll = () => {
+          if (!isScrolling) {
+            window.requestAnimationFrame(() => {
+              const rect = section.getBoundingClientRect();
+              const windowHeight = window.innerHeight;
+              
+              let progress = 0;
+              // If top of section is above or at top of viewport
+              if (rect.top <= 0) {
+                const scrollableDistance = rect.height - windowHeight;
+                // Calculate progress from 0 to 1
+                progress = Math.min(1, Math.max(0, -rect.top / scrollableDistance));
+              }
+              
+              // Map progress to translate: finish translating at 75% of the scroll (progress * 1.3333)
+              const translateProgress = Math.min(1, progress * 1.3333);
+              // 3 slides = total width 300%. To see the last slide, we translate by -66.666%
+              const translateValue = translateProgress * -66.6666;
+              track.style.transform = `translateX(${translateValue}%)`;
+              
+              isScrolling = false;
+            });
+            isScrolling = true;
+          }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        // Initial call in case page is loaded already scrolled
+        handleScroll();
+      }
+
+      // Interactive Particles System
+      const canvas = document.getElementById('particles-canvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let width = 0, height = 0;
+        let particles = [];
+        let mouse = { x: -1000, y: -1000, radius: 150 };
+
+        const initCanvas = () => {
+          width = canvas.width = window.innerWidth;
+          height = canvas.height = window.innerHeight;
+          particles = [];
+          // Increase particle count for a denser field
+          for (let i = 0; i < 120; i++) {
+            particles.push(new Particle());
+          }
+        };
+
+        class Particle {
+          constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            // Larger particles
+            this.size = Math.random() * 3 + 1.5;
+            this.baseX = this.x;
+            this.baseY = this.y;
+            this.density = (Math.random() * 20) + 1;
+            // Brighter particles
+            this.color = `rgba(255, 255, 255, ${Math.random() * 0.5 + 0.2})`;
+          }
+
+          draw() {
+            if (!ctx) return;
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.fill();
+          }
+
+          update() {
+            let dx = mouse.x - this.x;
+            let dy = mouse.y - this.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            let forceDirectionX = dx / distance;
+            let forceDirectionY = dy / distance;
+            let maxDistance = mouse.radius;
+            let force = (maxDistance - distance) / maxDistance;
+            let directionX = forceDirectionX * force * this.density;
+            let directionY = forceDirectionY * force * this.density;
+
+            if (distance < mouse.radius) {
+              this.x -= directionX;
+              this.y -= directionY;
+            } else {
+              if (this.x !== this.baseX) {
+                let dx = this.x - this.baseX;
+                this.x -= dx / 20;
+              }
+              if (this.y !== this.baseY) {
+                let dy = this.y - this.baseY;
+                this.y -= dy / 20;
+              }
+            }
+          }
+        }
+
+        const animate = () => {
+          if (!ctx) return;
+          ctx.clearRect(0, 0, width, height);
+          for (let i = 0; i < particles.length; i++) {
+            particles[i].draw();
+            particles[i].update();
+          }
+          requestAnimationFrame(animate);
+        };
+
+        initCanvas();
+        animate();
+
+        window.addEventListener('resize', initCanvas);
+        
+        // Track mouse movement across the document
+        document.addEventListener('mousemove', (e) => {
+          if (!section) return;
+          const rect = section.getBoundingClientRect();
+          // Only interact if the mouse is over the section
+          if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+             // Position relative to the sticky canvas
+             mouse.x = e.clientX;
+             mouse.y = e.clientY - Math.max(0, rect.top);
+          } else {
+             mouse.x = -1000;
+             mouse.y = -1000;
+          }
+        });
+      }
+    });
+  </script>
+</Layout>

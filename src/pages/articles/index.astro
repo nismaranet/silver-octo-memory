@@ -1,0 +1,187 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getArticles, urlFor } from '../../utils/sanity';
+
+const allArticles = await getArticles();
+const featuredArticle = allArticles.length > 0 ? allArticles[0] : null;
+const remainingArticles = allArticles.length > 1 ? allArticles.slice(1) : [];
+
+// Group remaining articles by category
+const categorizedArticles: Record<string, any[]> = {};
+const uncategorizedArticles: any[] = [];
+
+remainingArticles.forEach((article: any) => {
+  if (article.categories && article.categories.length > 0) {
+    const categoryTitle = article.categories[0].title;
+    if (!categorizedArticles[categoryTitle]) {
+      categorizedArticles[categoryTitle] = [];
+    }
+    categorizedArticles[categoryTitle].push(article);
+  } else {
+    uncategorizedArticles.push(article);
+  }
+});
+
+const formatDate = (dateString: string) => {
+  if (!dateString) return 'No Date';
+  return new Date(dateString).toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: '2-digit' });
+};
+---
+
+<Layout title="Articles & Publications - Nismara Group">
+  <main class="bg-white dark:bg-[#050505] transition-colors min-h-screen pb-32">
+    
+    <!-- Top Padding for Navbar -->
+    <div class="h-24"></div>
+
+    {allArticles.length === 0 ? (
+      <div class="max-w-4xl mx-auto px-6 py-32 text-center">
+        <h1 class="text-5xl font-light text-gray-900 dark:text-white tracking-tight mb-4">Archive</h1>
+        <p class="text-gray-400 font-light tracking-wide text-lg">No entries found in the archive.</p>
+      </div>
+    ) : (
+      <>
+        <!-- Featured Article Hero Banner -->
+        {featuredArticle && (
+          <section class="px-4 md:px-6 mb-24 reveal">
+            <div class="max-w-[1400px] mx-auto">
+              <div class="flex items-end justify-between mb-8">
+                <div>
+                  <p class="text-[10px] font-mono uppercase tracking-widest text-primary-600 dark:text-primary-500 mb-2">Featured Story</p>
+                  <h1 class="text-4xl md:text-5xl lg:text-6xl font-light text-gray-900 dark:text-white tracking-tight">Articles</h1>
+                </div>
+              </div>
+
+              <a href={`/articles/${featuredArticle.slug?.current || '#'}`} class="group block relative w-full h-[60vh] md:h-[70vh] rounded-3xl overflow-hidden shadow-2xl">
+                <!-- Background Image -->
+                {featuredArticle.mainImage ? (
+                  <img 
+                    src={urlFor(featuredArticle.mainImage).width(1600).height(900).url()} 
+                    alt={featuredArticle.title} 
+                    class="absolute inset-0 w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out"
+                  />
+                ) : (
+                  <div class="absolute inset-0 w-full h-full bg-gray-200 dark:bg-gray-800"></div>
+                )}
+                
+                <!-- Overlay Gradient -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                
+                <!-- Content -->
+                <div class="absolute bottom-0 left-0 right-0 p-8 md:p-12 lg:p-16 flex flex-col items-start justify-end">
+                  <div class="flex items-center gap-4 mb-4">
+                    {featuredArticle.categories && featuredArticle.categories.length > 0 && (
+                      <span class="px-3 py-1 bg-primary-600 text-white text-[10px] font-bold uppercase tracking-widest rounded-full">
+                        {featuredArticle.categories[0].title}
+                      </span>
+                    )}
+                    <span class="text-xs font-mono tracking-widest text-gray-300 uppercase">
+                      {formatDate(featuredArticle.publishedAt)}
+                    </span>
+                  </div>
+                  <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tighter leading-tight group-hover:text-primary-400 transition-colors max-w-4xl">
+                    {featuredArticle.title}
+                  </h2>
+                </div>
+              </a>
+            </div>
+          </section>
+        )}
+
+        <!-- Categorized Sections -->
+        <div class="max-w-7xl mx-auto px-6 space-y-24">
+          
+          {Object.entries(categorizedArticles).map(([category, items], categoryIndex) => (
+            <section class={`reveal delay-${(categoryIndex % 3) * 100}`}>
+              <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 pb-6 mb-12">
+                <h3 class="text-3xl md:text-4xl font-light text-gray-900 dark:text-white tracking-tight">
+                  <span class="font-bold">{category}</span> Archive
+                </h3>
+                <span class="text-xs font-mono tracking-widest text-gray-400 uppercase hidden sm:block">
+                  {items.length} {items.length === 1 ? 'Article' : 'Articles'}
+                </span>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+                {items.map((article: any, index: number) => (
+                  <article class="group flex flex-col">
+                    <a href={`/articles/${article.slug?.current || '#'}`} class="block aspect-[4/3] w-full rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-900 mb-6">
+                      {article.mainImage ? (
+                        <img 
+                          src={urlFor(article.mainImage).width(800).height(600).url()} 
+                          alt={article.title} 
+                          class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
+                        />
+                      ) : (
+                        <div class="w-full h-full flex items-center justify-center text-xs text-gray-400 font-mono uppercase tracking-widest">
+                          No Image
+                        </div>
+                      )}
+                    </a>
+                    
+                    <div class="flex items-center gap-3 mb-3">
+                      <span class="w-6 h-[1px] bg-primary-600 dark:bg-primary-500"></span>
+                      <time class="text-[10px] font-mono tracking-widest text-gray-500 uppercase">
+                        {formatDate(article.publishedAt)}
+                      </time>
+                    </div>
+                    
+                    <h4 class="text-xl md:text-2xl font-medium text-gray-900 dark:text-white leading-snug tracking-tight group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                      <a href={`/articles/${article.slug?.current || '#'}`} class="focus:outline-none">
+                        {article.title}
+                      </a>
+                    </h4>
+                  </article>
+                ))}
+              </div>
+            </section>
+          ))}
+          
+          <!-- Uncategorized Section -->
+          {uncategorizedArticles.length > 0 && (
+            <section class="reveal">
+              <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 pb-6 mb-12">
+                <h3 class="text-3xl md:text-4xl font-light text-gray-900 dark:text-white tracking-tight">
+                  <span class="font-bold">Other</span> Updates
+                </h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+                {uncategorizedArticles.map((article: any) => (
+                  <article class="group flex flex-col">
+                    <a href={`/articles/${article.slug?.current || '#'}`} class="block aspect-[4/3] w-full rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-900 mb-6">
+                      {article.mainImage ? (
+                        <img 
+                          src={urlFor(article.mainImage).width(800).height(600).url()} 
+                          alt={article.title} 
+                          class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
+                        />
+                      ) : (
+                        <div class="w-full h-full flex items-center justify-center text-xs text-gray-400 font-mono uppercase tracking-widest">
+                          No Image
+                        </div>
+                      )}
+                    </a>
+                    
+                    <div class="flex items-center gap-3 mb-3">
+                      <span class="w-6 h-[1px] bg-gray-300 dark:bg-gray-700"></span>
+                      <time class="text-[10px] font-mono tracking-widest text-gray-500 uppercase">
+                        {formatDate(article.publishedAt)}
+                      </time>
+                    </div>
+                    
+                    <h4 class="text-xl md:text-2xl font-medium text-gray-900 dark:text-white leading-snug tracking-tight group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                      <a href={`/articles/${article.slug?.current || '#'}`} class="focus:outline-none">
+                        {article.title}
+                      </a>
+                    </h4>
+                  </article>
+                ))}
+              </div>
+            </section>
+          )}
+
+        </div>
+      </>
+    )}
+  </main>
+</Layout>

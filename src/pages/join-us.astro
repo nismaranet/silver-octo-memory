@@ -1,0 +1,144 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const divisions = [
+  {
+    name: 'Nismara Transport',
+    category: 'Logistics & Passenger',
+    active: true,
+    url: 'https://transport.nismara.web.id',
+    image: '/images/nismara-transport.jpg'
+  },
+  {
+    name: 'Nismara Racing',
+    category: 'Motorsport Division',
+    active: true,
+    url: 'https://racing.nismara.web.id',
+    image: '/images/nismara-racing.webp'
+  },
+  {
+    name: 'Nismara Airlines',
+    category: 'Aviation Division',
+    active: false,
+    url: '#',
+    image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1000&auto=format&fit=crop'
+  },
+  {
+    name: 'Nismara World',
+    category: 'Gaming Ecosystem',
+    active: false,
+    url: '#',
+    image: 'https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=1000&auto=format&fit=crop'
+  }
+];
+---
+
+<Layout title="Join Us - Nismara Group">
+  <main class="bg-white dark:bg-[#050505] transition-colors min-h-screen pt-32">
+    
+    <!-- Hero Section -->
+    <section class="relative min-h-[50vh] flex items-center justify-center px-6 pb-24 overflow-hidden border-b border-black/10 dark:border-white/10">
+      <div class="max-w-7xl mx-auto w-full text-center relative z-10 reveal">
+        <p class="text-xs font-mono tracking-[0.3em] uppercase text-gray-500 mb-8">Start Your Journey</p>
+        <h1 class="text-6xl md:text-8xl lg:text-[10vw] leading-[0.8] font-bold tracking-tighter text-gray-900 dark:text-white uppercase mb-12">
+          JOIN <br/> THE CREW
+        </h1>
+        <p class="text-lg md:text-2xl text-gray-600 dark:text-gray-400 font-light max-w-2xl mx-auto leading-relaxed">
+          Satu langkah kecil menuju ekosistem simulasi virtual paling profesional di Indonesia.
+        </p>
+      </div>
+    </section>
+
+    <!-- Onboarding Steps -->
+    <section class="py-32 px-6 bg-gray-50 dark:bg-[#0a0a0a] transition-colors border-b border-black/10 dark:border-white/10">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-24 reveal">
+          <p class="text-[10px] font-mono uppercase tracking-[0.2em] text-primary-600 dark:text-primary-400 mb-4">Onboarding</p>
+          <h2 class="text-4xl md:text-6xl font-light text-gray-900 dark:text-white tracking-tight">Cara Bergabung</h2>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-24">
+          <!-- Step 1 -->
+          <div class="flex flex-col text-center items-center reveal delay-100 relative group">
+            <div class="w-16 h-16 rounded-full border border-gray-300 dark:border-gray-800 flex items-center justify-center text-xl font-mono text-gray-400 mb-8 group-hover:border-primary-600 group-hover:text-primary-600 transition-colors">01</div>
+            <h3 class="text-2xl font-medium text-gray-900 dark:text-white mb-4">Masuk Discord</h3>
+            <p class="text-gray-600 dark:text-gray-400 font-light leading-relaxed">Bergabung ke markas pusat kami. Semua informasi pendaftaran, pengumuman, dan komunikasi antar divisi berpusat di server Discord Nismara.</p>
+          </div>
+          <!-- Step 2 -->
+          <div class="flex flex-col text-center items-center reveal delay-200 relative group">
+            <div class="w-16 h-16 rounded-full border border-gray-300 dark:border-gray-800 flex items-center justify-center text-xl font-mono text-gray-400 mb-8 group-hover:border-primary-600 group-hover:text-primary-600 transition-colors">02</div>
+            <h3 class="text-2xl font-medium text-gray-900 dark:text-white mb-4">Pilih Divisi</h3>
+            <p class="text-gray-600 dark:text-gray-400 font-light leading-relaxed">Tentukan jalur karir virtual Anda. Pilih divisi yang paling sesuai dengan passion Anda, lalu ikuti prosedur rekrutmen di masing-masing portal divisi.</p>
+          </div>
+          <!-- Step 3 -->
+          <div class="flex flex-col text-center items-center reveal delay-300 relative group">
+            <div class="w-16 h-16 rounded-full border border-gray-300 dark:border-gray-800 flex items-center justify-center text-xl font-mono text-gray-400 mb-8 group-hover:border-primary-600 group-hover:text-primary-600 transition-colors">03</div>
+            <h3 class="text-2xl font-medium text-gray-900 dark:text-white mb-4">Mulai Mengaspal</h3>
+            <p class="text-gray-600 dark:text-gray-400 font-light leading-relaxed">Setelah lulus proses rekrutmen, Anda resmi menjadi bagian dari kru. Saatnya menghidupkan mesin, masuk ke lobi, dan bermain bersama kami!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Division Selection -->
+    <section class="py-32 px-6 bg-white dark:bg-[#050505] transition-colors overflow-hidden border-b border-black/10 dark:border-white/10">
+      <div class="max-w-7xl mx-auto mb-24 reveal text-center">
+        <p class="text-[10px] font-mono uppercase tracking-[0.2em] text-primary-600 dark:text-primary-400 mb-4">Select Your Path</p>
+        <h2 class="text-4xl md:text-6xl font-light text-gray-900 dark:text-white tracking-tight">Pilih Divisi Anda</h2>
+      </div>
+
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+        {divisions.map((div, i) => (
+          <a href={div.active ? div.url : '#'} class={`group relative block h-[400px] lg:h-[500px] overflow-hidden rounded-sm reveal delay-${(i % 2) * 100} ${div.active ? 'cursor-pointer' : 'cursor-not-allowed'}`}>
+            <!-- Background Image -->
+            <div class="absolute inset-0 bg-gray-900">
+              <img src={div.image} alt={div.name} class={`w-full h-full object-cover transition-all duration-[1.5s] ease-out ${div.active ? 'opacity-40 grayscale group-hover:grayscale-0 group-hover:scale-105' : 'opacity-20 grayscale'}`} />
+            </div>
+            
+            <!-- Inactive Overlay -->
+            {!div.active && (
+              <div class="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center z-20">
+                <div class="px-6 py-3 border border-white/20 bg-black/50 text-white font-mono text-sm tracking-widest uppercase rounded-sm">Coming Soon</div>
+              </div>
+            )}
+            
+            <!-- Content -->
+            <div class="absolute inset-0 p-10 flex flex-col justify-between z-10">
+              <span class="text-xs font-mono tracking-widest text-white/70 uppercase">{div.category}</span>
+              <div>
+                <h3 class="text-3xl md:text-5xl font-medium text-white tracking-tighter mb-4 group-hover:text-primary-400 transition-colors">
+                  {div.name}
+                </h3>
+                {div.active && (
+                  <div class="inline-flex items-center gap-4 text-xs font-bold tracking-widest uppercase text-white group-hover:text-primary-400 w-fit">
+                    <span class="border-b border-white/50 pb-1 group-hover:border-primary-400 transition-colors">Gabung Divisi</span>
+                    <svg class="w-4 h-4 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                  </div>
+                )}
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Discord CTA Portal -->
+    <section class="py-32 px-6 bg-gray-50 dark:bg-[#0a0f1a] transition-colors relative flex items-center justify-center text-center overflow-hidden border-b border-black/10 dark:border-white/10">
+      <div class="relative z-10 max-w-4xl mx-auto reveal flex flex-col items-center">
+        <!-- Discord Icon Decor -->
+        <div class="w-24 h-24 bg-[#5865F2] rounded-full flex items-center justify-center mb-12 shadow-2xl shadow-[#5865F2]/20 animate-wiggle">
+          <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+        </div>
+        
+        <h2 class="text-5xl md:text-7xl font-bold tracking-tighter text-gray-900 dark:text-white uppercase mb-8">Pusat Komando</h2>
+        <p class="text-xl md:text-2xl text-gray-500 dark:text-gray-400 font-light max-w-2xl mx-auto mb-12 leading-relaxed">
+          Semua anggota Nismara berkumpul dan berinteraksi di sini. Masuk ke Server Discord kami untuk memulai langkah pertama Anda.
+        </p>
+        <a href="https://discord.gg/nismara" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-4 px-12 py-5 bg-[#5865F2] text-white hover:bg-[#4752C4] hover:scale-105 transition-all duration-300 font-bold uppercase tracking-widest text-sm shadow-xl shadow-[#5865F2]/20">
+          Masuk Server Discord
+        </a>
+      </div>
+    </section>
+    
+  </main>
+</Layout>

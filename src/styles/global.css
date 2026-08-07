@@ -1,0 +1,92 @@
+@import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  
+  /* Primary Brand Colors */
+  --color-primary-50: #f0f9ff;
+  --color-primary-100: #e0f2fe;
+  --color-primary-600: #0284c7;
+  --color-primary-900: #0c4a6e;
+  
+  /* Semantic Theme Colors */
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border-subtle: var(--border-subtle);
+
+  /* Animations */
+  --animate-marquee: marquee 70s linear infinite;
+  --animate-wiggle: wiggle 0.2s ease-in-out infinite;
+  
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(-3deg) scale(1.05); }
+    50% { transform: rotate(3deg) scale(1.05); }
+  }
+}
+
+@layer base {
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  
+  /* Default Light Theme (White) */
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb; /* gray-50 */
+    --text-primary: #111827; /* gray-900 */
+    --text-secondary: #4b5563; /* gray-600 */
+    --border-subtle: #f3f4f6; /* gray-100 */
+  }
+
+  /* Dark Theme */
+  html.dark {
+    --bg-primary: #0f172a; /* slate-900 */
+    --bg-secondary: #1e293b; /* slate-800 */
+    --text-primary: #f8fafc; /* slate-50 */
+    --text-secondary: #cbd5e1; /* slate-300 */
+    --border-subtle: #334155; /* slate-700 */
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Scroll Reveal Animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  
+  .reveal.reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .delay-100 { transition-delay: 100ms; }
+  .delay-200 { transition-delay: 200ms; }
+  .delay-300 { transition-delay: 300ms; }
+  .delay-400 { transition-delay: 400ms; }
+  
+  /* Minimalist Borders & Patterns */
+  .hairline-border {
+    border: 1px solid var(--border-subtle);
+  }
+  
+  .vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+}

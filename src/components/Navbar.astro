@@ -1,0 +1,65 @@
+---
+const navLinks = [
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about-us' },
+  { name: 'Articles', href: '/articles' },
+  { name: 'Contact', href: '/contact' },
+];
+---
+
+<header class="absolute w-full top-0 z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border-b border-gray-100 dark:border-slate-800 transition-colors duration-300">
+  <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+    <a href="/" class="group transition-transform hover:scale-105">
+      <img src="/images/nismara-group-logo.png" alt="Nismara Group" class="h-8 md:h-10 w-auto dark:hidden" />
+      <img src="/images/nismara-group-logo-white.png" alt="Nismara Group" class="h-8 md:h-10 w-auto hidden dark:block" />
+    </a>
+    
+    <nav class="hidden md:flex items-center gap-8">
+      {navLinks.map(link => (
+        <a 
+          href={link.href} 
+          class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-primary-600 dark:after:bg-primary-400 after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100"
+        >
+          {link.name}
+        </a>
+      ))}
+      <a href="/join-us" class="px-5 py-2.5 bg-primary-600 text-white text-sm font-medium rounded-full shadow-md shadow-primary-600/20 hover:bg-primary-700 transition-all hover:-translate-y-0.5">
+        Join Us
+      </a>
+      
+      <button id="theme-toggle" class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 focus:outline-none transition-colors" aria-label="Toggle Dark Mode">
+        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+        </svg>
+        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+  const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+  const themeToggleBtn = document.getElementById('theme-toggle');
+
+  if (localStorage.getItem('theme') === 'dark') {
+    themeToggleLightIcon?.classList.remove('hidden');
+  } else {
+    themeToggleDarkIcon?.classList.remove('hidden');
+  }
+
+  themeToggleBtn?.addEventListener('click', function() {
+    themeToggleDarkIcon?.classList.toggle('hidden');
+    themeToggleLightIcon?.classList.toggle('hidden');
+
+    if (localStorage.getItem('theme') === 'light' || !localStorage.getItem('theme')) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  });
+</script>

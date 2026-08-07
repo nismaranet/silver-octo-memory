@@ -1,0 +1,75 @@
+---
+import { getArticle, urlFor, ARTICLES_QUERY } from '../../utils/sanity';
+import { sanityClient } from 'sanity:client';
+import Layout from '../../layouts/Layout.astro';
+import { PortableText } from 'astro-portabletext';
+
+export async function getStaticPaths() {
+  const articles = await sanityClient.fetch(ARTICLES_QUERY);
+  return articles.map((article: any) => ({
+    params: { slug: article.slug.current },
+  }));
+}
+
+const { slug } = Astro.params;
+const article = await getArticle(slug);
+
+if (!article) {
+  return Astro.redirect('/404');
+}
+
+const ogImage = article.mainImage ? urlFor(article.mainImage).width(1200).height(630).url() : undefined;
+---
+
+<Layout 
+  title={`${article.title} | Nismara Group`}
+  description={`Read ${article.title} on Nismara Group Publications.`}
+  image={ogImage}
+  type="article"
+>
+  <main class="max-w-3xl mx-auto px-4 py-12">
+    <a href="/articles" class="text-blue-600 hover:underline mb-8 inline-block">&larr; Back to Publications</a>
+    
+    <article class="prose lg:prose-xl">
+      <h1 class="text-4xl font-bold mb-6">{article.title}</h1>
+      
+      <div class="flex items-center gap-4 mb-8 not-prose">
+        {article.author?.image && (
+          <img 
+            src={urlFor(article.author.image).width(48).height(48).url()} 
+            alt={article.author.name}
+            class="w-12 h-12 rounded-full border border-gray-200 dark:border-gray-800"
+          />
+        )}
+        <div class="flex flex-col">
+          {article.author?.name && (
+            <span class="text-gray-900 dark:text-white font-medium">{article.author.name}</span>
+          )}
+          {article.publishedAt && (
+            <time class="text-sm text-gray-500 dark:text-gray-400 font-mono tracking-wide mt-1">
+              {new Date(article.publishedAt).toLocaleDateString('id-ID', { 
+                timeZone: 'Asia/Jakarta',
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+            </time>
+          )}
+        </div>
+      </div>
+
+      {article.mainImage && (
+        <img 
+          src={urlFor(article.mainImage).width(1200).height(600).url()} 
+          alt={article.title}
+          class="w-full rounded-xl mb-12 shadow-md"
+        />
+      )}
+
+      <div class="mt-8 leading-relaxed text-gray-800">
+        <PortableText value={article.body} />
+      </div>
+    </article>
+  </main>
+</Layout>

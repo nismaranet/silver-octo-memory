@@ -1,0 +1,52 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  url?: string;
+  type?: string;
+}
+
+const {
+  title = "Nismara Group - Indonesian Virtual Sim Community",
+  description = "Nismara Group adalah salah satu komunitas terbesar pencinta games simulasi di Indonesia. Kami menjadi platform bagi para simmers untuk terhubung, berbagi, dan menikmati hobi bersama.",
+  image = "/favicon.svg", // Fallback image
+  url = Astro.url.href,
+  type = "website"
+} = Astro.props;
+
+// Ensure full URL for image if it's relative
+const siteUrl = Astro.site ? Astro.site.href : Astro.url.origin;
+const fullImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
+---
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" href="/favicon.ico" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<meta name="author" content="Nismara Group" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={url} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={fullImage} />
+<meta property="og:site_name" content="Nismara Group" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={url} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={fullImage} />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={url} />
