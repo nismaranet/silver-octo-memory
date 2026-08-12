@@ -1,0 +1,163 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getFleet, getFleetAircraft, urlFor } from '../../../utils/sanity';
+import { PortableText } from 'astro-portabletext';
+
+export async function getStaticPaths() {
+  const fleet = await getFleet();
+  return fleet.map((aircraft: any) => ({
+    params: { slug: aircraft.slug.current },
+  }));
+}
+
+const { slug } = Astro.params;
+const aircraft = await getFleetAircraft(slug as string);
+
+if (!aircraft) {
+  return Astro.redirect('/404');
+}
+---
+
+<Layout title={`${aircraft.name} - Nismara Airlines Fleet`} hideFooter={true} noPaddingTop={true}>
+  <main class="bg-gray-50 dark:bg-[#0b1120] min-h-screen text-gray-900 dark:text-white selection:bg-champagne selection:text-white transition-colors duration-300">
+    
+    <!-- Hero Section -->
+    <section class="relative w-full h-[60vh] md:h-[80vh] flex items-end pb-16 md:pb-24 pt-32">
+      <!-- Background Image -->
+      <div class="absolute inset-0 z-0 overflow-hidden">
+        {aircraft.mainImage ? (
+          <img 
+            src={urlFor(aircraft.mainImage).width(1920).height(1080).url()} 
+            alt={aircraft.name} 
+            class="w-full h-full object-cover object-center"
+          />
+        ) : (
+          <div class="w-full h-full bg-gray-200 dark:bg-gray-900"></div>
+        )}
+        <!-- Gradient to ensure text readability on ANY image (always dark gradient) -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+        <!-- Soft dark overlay at the very top to ensure Navbar visibility -->
+        <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/60 to-transparent"></div>
+      </div>
+
+      <!-- Hero Content -->
+      <div class="max-w-7xl mx-auto px-6 w-full relative z-10 fade-up">
+        <a href="/airlines" class="inline-flex items-center gap-2 text-champagne hover:text-white transition-colors mb-8 text-sm font-medium tracking-widest uppercase">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+          Back to Fleet
+        </a>
+        <div class="flex items-center gap-4 mb-4">
+          <span class="px-3 py-1 bg-champagne/20 text-champagne border border-champagne/30 text-xs font-mono tracking-widest uppercase rounded-full">
+            {aircraft.manufacturer || 'Aircraft'}
+          </span>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-serif font-light mb-4 text-white drop-shadow-md">{aircraft.name}</h1>
+      </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="py-16 md:py-24 bg-gray-50 dark:bg-[#0b1120] relative z-10 transition-colors duration-300">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+          
+          <!-- Left Column: Specs Grid -->
+          <div class="lg:col-span-4 fade-up delay-200">
+            <div class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none rounded-2xl p-8 sticky top-32 backdrop-blur-sm transition-colors duration-300">
+              <h3 class="text-xs text-gray-500 dark:text-white/50 uppercase tracking-[0.2em] mb-8 font-mono">Technical Specifications</h3>
+              
+              <ul class="space-y-6">
+                <li class="flex flex-col border-b border-gray-100 dark:border-white/10 pb-4">
+                  <span class="text-xs text-gray-400 dark:text-white/40 uppercase tracking-widest mb-1">Max Range</span>
+                  <span class="text-xl font-light text-gray-900 dark:text-champagne">{aircraft.range || '-'}</span>
+                </li>
+                <li class="flex flex-col border-b border-gray-100 dark:border-white/10 pb-4">
+                  <span class="text-xs text-gray-400 dark:text-white/40 uppercase tracking-widest mb-1">Capacity</span>
+                  <span class="text-xl font-light text-gray-900 dark:text-champagne">{aircraft.capacity || '-'}</span>
+                </li>
+                <li class="flex flex-col border-b border-gray-100 dark:border-white/10 pb-4">
+                  <span class="text-xs text-gray-400 dark:text-white/40 uppercase tracking-widest mb-1">Cruising Speed</span>
+                  <span class="text-xl font-light text-gray-900 dark:text-champagne">{aircraft.cruisingSpeed || '-'}</span>
+                </li>
+                <li class="flex flex-col border-b border-gray-100 dark:border-white/10 pb-4">
+                  <span class="text-xs text-gray-400 dark:text-white/40 uppercase tracking-widest mb-1">Engine Type</span>
+                  <span class="text-xl font-light text-gray-900 dark:text-champagne">{aircraft.engineType || '-'}</span>
+                </li>
+                <li class="flex flex-col border-b border-gray-100 dark:border-white/10 pb-4">
+                  <span class="text-xs text-gray-400 dark:text-white/40 uppercase tracking-widest mb-1">Length</span>
+                  <span class="text-xl font-light text-gray-900 dark:text-champagne">{aircraft.length || '-'}</span>
+                </li>
+                <li class="flex flex-col pb-4">
+                  <span class="text-xs text-gray-400 dark:text-white/40 uppercase tracking-widest mb-1">Wingspan</span>
+                  <span class="text-xl font-light text-gray-900 dark:text-champagne">{aircraft.wingspan || '-'}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Right Column: Description & Gallery -->
+          <div class="lg:col-span-8 fade-up delay-400">
+            
+            <!-- Description -->
+            {aircraft.description && aircraft.description.length > 0 && (
+              <div class="prose prose-lg dark:prose-invert max-w-none mb-24 prose-headings:font-serif prose-headings:font-light prose-a:text-champagne prose-img:rounded-xl">
+                <PortableText value={aircraft.description} />
+              </div>
+            )}
+
+            <!-- Gallery -->
+            {aircraft.gallery && aircraft.gallery.length > 0 && (
+              <div>
+                <h3 class="text-3xl font-serif font-light mb-8 text-gray-900 dark:text-white">Gallery</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {aircraft.gallery.map((image: any) => (
+                    <div class="aspect-video bg-gray-100 dark:bg-white/5 rounded-xl overflow-hidden border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none">
+                      <img 
+                        src={urlFor(image).width(800).height(450).url()} 
+                        alt="Gallery Image" 
+                        class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</Layout>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const fadeElements = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    fadeElements.forEach(el => observer.observe(el));
+  });
+</script>
+
+<style>
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .delay-200 { transition-delay: 200ms; }
+  .delay-400 { transition-delay: 400ms; }
+</style>

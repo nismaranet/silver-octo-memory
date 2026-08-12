@@ -1,0 +1,363 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="BLCK Division - Nismara Group" hideFooter={true}>
+  <!-- BLCK Specific Styles for Glitch & Tactical Effects -->
+  <style>
+    /* Glitch Effect */
+    .glitch-wrapper {
+      position: relative;
+    }
+    .glitch {
+      position: relative;
+      color: white;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      z-index: 1;
+    }
+    .glitch::before, .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+    }
+    .glitch::before {
+      left: 2px;
+      text-shadow: -2px 0 #ff0000;
+      clip: rect(24px, 550px, 90px, 0);
+      animation: glitch-anim-2 3s infinite linear alternate-reverse;
+    }
+    .glitch::after {
+      left: -2px;
+      text-shadow: -2px 0 #00ffff;
+      clip: rect(85px, 550px, 140px, 0);
+      animation: glitch-anim 2.5s infinite linear alternate-reverse;
+    }
+    @keyframes glitch-anim {
+      0% { clip: rect(10px, 9999px, 44px, 0); }
+      5% { clip: rect(66px, 9999px, 10px, 0); }
+      10% { clip: rect(98px, 9999px, 92px, 0); }
+      15% { clip: rect(14px, 9999px, 42px, 0); }
+      20% { clip: rect(100px, 9999px, 83px, 0); }
+      25% { clip: rect(32px, 9999px, 78px, 0); }
+      30% { clip: rect(83px, 9999px, 15px, 0); }
+      35% { clip: rect(54px, 9999px, 84px, 0); }
+      40% { clip: rect(3px, 9999px, 55px, 0); }
+      45% { clip: rect(96px, 9999px, 49px, 0); }
+      50% { clip: rect(43px, 9999px, 23px, 0); }
+      55% { clip: rect(72px, 9999px, 66px, 0); }
+      60% { clip: rect(22px, 9999px, 34px, 0); }
+      65% { clip: rect(85px, 9999px, 9px, 0); }
+      70% { clip: rect(11px, 9999px, 96px, 0); }
+      75% { clip: rect(63px, 9999px, 41px, 0); }
+      80% { clip: rect(29px, 9999px, 74px, 0); }
+      85% { clip: rect(94px, 9999px, 12px, 0); }
+      90% { clip: rect(55px, 9999px, 82px, 0); }
+      95% { clip: rect(8px, 9999px, 53px, 0); }
+      100% { clip: rect(77px, 9999px, 20px, 0); }
+    }
+    @keyframes glitch-anim-2 {
+      0% { clip: rect(65px, 9999px, 100px, 0); }
+      5% { clip: rect(12px, 9999px, 59px, 0); }
+      10% { clip: rect(83px, 9999px, 24px, 0); }
+      15% { clip: rect(44px, 9999px, 93px, 0); }
+      20% { clip: rect(95px, 9999px, 16px, 0); }
+      25% { clip: rect(27px, 9999px, 81px, 0); }
+      30% { clip: rect(78px, 9999px, 38px, 0); }
+      35% { clip: rect(5px, 9999px, 62px, 0); }
+      40% { clip: rect(52px, 9999px, 7px, 0); }
+      45% { clip: rect(89px, 9999px, 45px, 0); }
+      50% { clip: rect(31px, 9999px, 88px, 0); }
+      55% { clip: rect(19px, 9999px, 52px, 0); }
+      60% { clip: rect(74px, 9999px, 11px, 0); }
+      65% { clip: rect(36px, 9999px, 97px, 0); }
+      70% { clip: rect(92px, 9999px, 28px, 0); }
+      75% { clip: rect(15px, 9999px, 73px, 0); }
+      80% { clip: rect(61px, 9999px, 35px, 0); }
+      85% { clip: rect(48px, 9999px, 85px, 0); }
+      90% { clip: rect(8px, 9999px, 54px, 0); }
+      95% { clip: rect(86px, 9999px, 19px, 0); }
+      100% { clip: rect(24px, 9999px, 91px, 0); }
+    }
+
+    /* Scanlines */
+    .scanlines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
+      background-size: 100% 4px;
+      z-index: 10;
+      pointer-events: none;
+      opacity: 0.3;
+    }
+
+    /* Noise Background */
+    .noise-bg {
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      right: -50%;
+      bottom: -50%;
+      width: 200%;
+      height: 200%;
+      background: transparent url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');
+      opacity: 0.05;
+      pointer-events: none;
+      animation: noise-anim 1s infinite linear;
+      z-index: 1;
+    }
+    @keyframes noise-anim {
+      0% { transform: translate(0,0); }
+      10% { transform: translate(-5%,-5%); }
+      20% { transform: translate(-10%,5%); }
+      30% { transform: translate(5%,-10%); }
+      40% { transform: translate(-5%,15%); }
+      50% { transform: translate(-10%,5%); }
+      60% { transform: translate(15%,0); }
+      70% { transform: translate(0,15%); }
+      80% { transform: translate(3%,35%); }
+      90% { transform: translate(-10%,10%); }
+      100% { transform: translate(0,0); }
+    }
+
+    /* Force dark theme for this entire page */
+    .blck-theme {
+      background-color: #050505 !important;
+      color: #ffffff !important;
+    }
+  </style>
+
+  <main class="blck-theme min-h-screen relative overflow-hidden font-sans">
+    
+    <!-- Hero Section -->
+    <section class="relative h-[90vh] lg:h-screen flex items-center justify-center overflow-hidden border-b border-red-900/30 pt-20">
+      <div class="scanlines"></div>
+      
+      <!-- Background Image -->
+      <div class="absolute inset-0 z-0">
+        <img src="/images/gta-v.jpg" alt="BLCK Operations" class="w-full h-full object-cover grayscale opacity-20 object-center" />
+        <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-[#050505]"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-[#050505] via-transparent to-[#050505] opacity-80"></div>
+      </div>
+      
+      <div class="noise-bg"></div>
+
+      <div class="relative z-20 text-center px-6 mt-16 lg:mt-0">
+        <div class="inline-flex items-center gap-2 px-3 py-1 border border-red-600/50 bg-red-900/20 text-[10px] font-mono tracking-[0.3em] uppercase text-red-500 mb-8 backdrop-blur-sm">
+          <span class="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span>
+          Tactical Operations Division
+        </div>
+        
+        <div class="glitch-wrapper mb-6">
+          <h1 class="glitch text-[20vw] md:text-[15vw] lg:text-[12vw] leading-none" data-text="BLCK">BLCK</h1>
+        </div>
+        
+        <p class="font-mono text-xs md:text-sm text-gray-400 tracking-widest uppercase max-w-xl mx-auto mb-12">
+          Calculated Risk. <span class="text-red-500">Maximum Reward.</span><br/>
+          Specialized in high-stakes scenarios.
+        </p>
+        
+        <a href="#dossier" class="inline-block border border-red-600 px-8 py-4 text-xs font-mono tracking-widest uppercase text-white hover:bg-red-600 transition-colors duration-300 relative group overflow-hidden">
+          <span class="relative z-10 flex items-center gap-3">
+            Access Dossier
+            <svg class="w-4 h-4 transform group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+          </span>
+          <div class="absolute inset-0 bg-red-600 w-0 group-hover:w-full transition-all duration-300 ease-out"></div>
+        </a>
+      </div>
+      
+      <!-- Decorational HUD elements -->
+      <div class="absolute top-32 left-6 text-[10px] font-mono text-red-500/50 tracking-widest uppercase hidden md:block">
+        SYS.REQ: OK<br/>
+        NET.STATUS: SECURE<br/>
+        COORD: 34.0522° N, 118.2437° W
+      </div>
+      <div class="absolute bottom-12 right-6 text-[10px] font-mono text-red-500/50 tracking-widest text-right hidden md:block">
+        AUTHORIZATION LEVEL 4 REQUIRED<br/>
+        UNAUTHORIZED ACCESS WILL BE LOGGED
+      </div>
+    </section>
+
+    <!-- Mission Profile Section -->
+    <section id="dossier" class="py-24 lg:py-32 relative z-10 border-b border-white/5 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')]">
+      <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+        
+        <!-- Left text -->
+        <div class="reveal">
+          <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-8 flex flex-col">
+            <span class="text-gray-500 text-sm md:text-xl tracking-widest font-mono mb-2">01 // The Directive</span>
+            Executing the<br/>Impossible.
+          </h2>
+          <div class="w-16 h-1 bg-red-600 mb-8"></div>
+          <p class="text-gray-400 font-light leading-relaxed mb-6 text-base md:text-lg">
+            BLCK adalah divisi operasi khusus Nismara Group yang bergerak di dunia maya yang penuh aksi dan ketegangan. Kami beroperasi di mana hukum abu-abu, dan presisi adalah segalanya.
+          </p>
+          <p class="text-gray-500 font-mono text-xs md:text-sm leading-relaxed border-l-2 border-red-600 pl-4">
+            "Kami tidak merencanakan untuk gagal. Setiap langkah dihitung, setiap detik dimanfaatkan. Dari pencurian skala besar hingga ekstraksi VIP, kami menyelesaikan pekerjaan dengan rapi."
+          </p>
+        </div>
+
+        <!-- Right Stats/HUD -->
+        <div class="reveal delay-100 flex flex-col justify-center">
+          <div class="bg-[#0a0a0a] border border-white/10 p-6 md:p-8 rounded-sm relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-16 h-16 bg-red-600/10 rounded-bl-full"></div>
+            
+            <h3 class="text-[10px] md:text-xs font-mono text-red-500 tracking-[0.2em] uppercase mb-8 border-b border-white/10 pb-4">Operational Metrics</h3>
+            
+            <div class="space-y-6">
+              <div>
+                <div class="flex justify-between font-mono text-[10px] md:text-xs text-gray-400 mb-2 uppercase">
+                  <span>Tactical Success Rate</span>
+                  <span class="text-white">98.4%</span>
+                </div>
+                <div class="w-full bg-white/5 h-1">
+                  <div class="bg-red-600 h-1" style="width: 98.4%"></div>
+                </div>
+              </div>
+              
+              <div>
+                <div class="flex justify-between font-mono text-[10px] md:text-xs text-gray-400 mb-2 uppercase">
+                  <span>Stealth Integrity</span>
+                  <span class="text-white">85.0%</span>
+                </div>
+                <div class="w-full bg-white/5 h-1">
+                  <div class="bg-red-600 h-1" style="width: 85%"></div>
+                </div>
+              </div>
+              
+              <div>
+                <div class="flex justify-between font-mono text-[10px] md:text-xs text-gray-400 mb-2 uppercase">
+                  <span>Asset Recovery</span>
+                  <span class="text-white">100%</span>
+                </div>
+                <div class="w-full bg-white/5 h-1">
+                  <div class="bg-red-600 h-1" style="width: 100%"></div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Operational Sectors (Grid) -->
+    <section class="py-24 lg:py-32 relative z-10 border-b border-white/5 bg-[#030303]">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-12 lg:mb-16 reveal">
+          <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4 text-center">
+            Fields of <span class="text-red-600">Engagement</span>
+          </h2>
+          <p class="text-center font-mono text-gray-500 text-[10px] md:text-xs tracking-widest uppercase">Select your protocol</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Sector 1 -->
+          <div class="group relative bg-[#080808] border border-white/10 hover:border-red-600/50 transition-colors h-[300px] md:h-[400px] flex flex-col justify-end p-6 md:p-8 overflow-hidden reveal delay-100">
+            <div class="absolute inset-0 bg-[url('/images/gta-v.jpg')] bg-cover bg-center opacity-20 grayscale group-hover:grayscale-0 group-hover:opacity-40 transition-all duration-700"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
+            
+            <div class="relative z-10 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+              <div class="w-8 h-8 md:w-10 md:h-10 border border-red-600/30 flex items-center justify-center text-red-500 font-mono text-[10px] md:text-xs mb-4 group-hover:bg-red-600 group-hover:text-white transition-colors">01</div>
+              <h3 class="text-xl md:text-2xl font-black uppercase tracking-tight mb-2">High-Stakes Heists</h3>
+              <p class="text-gray-400 text-xs md:text-sm font-light opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">Perencanaan matang, eksekusi tanpa cela. Kami berspesialisasi dalam perampokan skala besar dengan risiko maksimum.</p>
+            </div>
+          </div>
+
+          <!-- Sector 2 -->
+          <div class="group relative bg-[#080808] border border-white/10 hover:border-red-600/50 transition-colors h-[300px] md:h-[400px] flex flex-col justify-end p-6 md:p-8 overflow-hidden reveal delay-200">
+            <div class="absolute inset-0 bg-[url('/images/sim-character.png')] bg-cover bg-center opacity-20 grayscale group-hover:grayscale-0 group-hover:opacity-40 transition-all duration-700"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
+            
+            <div class="relative z-10 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+              <div class="w-8 h-8 md:w-10 md:h-10 border border-red-600/30 flex items-center justify-center text-red-500 font-mono text-[10px] md:text-xs mb-4 group-hover:bg-red-600 group-hover:text-white transition-colors">02</div>
+              <h3 class="text-xl md:text-2xl font-black uppercase tracking-tight mb-2">VIP Escort & Security</h3>
+              <p class="text-gray-400 text-xs md:text-sm font-light opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">Perlindungan absolut. Tim keamanan BLCK terlatih untuk menghadapi ancaman ekstrem guna melindungi aset berharga.</p>
+            </div>
+          </div>
+
+          <!-- Sector 3 -->
+          <div class="group relative bg-[#080808] border border-white/10 hover:border-red-600/50 transition-colors h-[300px] md:h-[400px] flex flex-col justify-end p-6 md:p-8 overflow-hidden reveal delay-300">
+            <div class="absolute inset-0 bg-[url('/images/sim-atmosphere.png')] bg-cover bg-center opacity-20 grayscale group-hover:grayscale-0 group-hover:opacity-40 transition-all duration-700"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
+            
+            <div class="relative z-10 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+              <div class="w-8 h-8 md:w-10 md:h-10 border border-red-600/30 flex items-center justify-center text-red-500 font-mono text-[10px] md:text-xs mb-4 group-hover:bg-red-600 group-hover:text-white transition-colors">03</div>
+              <h3 class="text-xl md:text-2xl font-black uppercase tracking-tight mb-2">Tactical Assault</h3>
+              <p class="text-gray-400 text-xs md:text-sm font-light opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">Penyergapan cepat dan mematikan. Kami mendominasi pertempuran jarak dekat (CQB) maupun pertempuran terbuka.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Enlistment CTA -->
+    <section class="py-24 lg:py-32 relative z-10 bg-black overflow-hidden flex items-center justify-center min-h-[50vh] lg:min-h-[60vh]">
+      <!-- Background crosshair/target -->
+      <div class="absolute inset-0 pointer-events-none flex items-center justify-center opacity-10">
+        <svg viewBox="0 0 100 100" class="w-[120vw] h-[120vw] md:w-[60vw] md:h-[60vw] max-w-[800px] max-h-[800px] animate-[spin_60s_linear_infinite]">
+          <circle cx="50" cy="50" r="48" fill="none" stroke="#ef4444" stroke-width="0.5" stroke-dasharray="2 4" />
+          <circle cx="50" cy="50" r="30" fill="none" stroke="#ef4444" stroke-width="0.2" />
+          <path d="M50 0 L50 40 M50 60 L50 100 M0 50 L40 50 M60 50 L100 50" stroke="#ef4444" stroke-width="0.5" />
+        </svg>
+      </div>
+
+      <div class="relative z-20 text-center px-6 max-w-2xl reveal">
+        <h2 class="text-4xl md:text-5xl lg:text-7xl font-black uppercase tracking-tighter mb-6 leading-[0.9]">
+          Do You Have<br/>What It Takes?
+        </h2>
+        <p class="text-gray-400 font-mono text-[10px] md:text-sm mb-12">
+          RECRUITMENT STATUS: <span class="text-green-500 animate-pulse">[ OPEN ]</span><br/>
+          Hanya untuk mereka yang tidak ragu menarik pelatuk.
+        </p>
+        
+        <a href="/join-us" class="inline-flex items-center gap-4 bg-red-600 hover:bg-red-700 text-white px-8 py-4 md:px-10 md:py-5 text-xs md:text-sm font-black uppercase tracking-widest transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(220,38,38,0.4)]">
+          Enlist Now
+          <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- Tactical Footer -->
+    <footer class="bg-[#030303] border-t border-red-900/30 pt-16 pb-8 relative z-10">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-8 mb-12">
+          
+          <!-- Logo & Info -->
+          <div class="flex flex-col items-center md:items-start">
+            <div class="text-3xl font-black tracking-tighter text-white mb-2">BLCK<span class="text-red-600">.</span></div>
+            <div class="text-[10px] font-mono text-gray-500 tracking-widest uppercase">Tactical Operations Division</div>
+          </div>
+          
+          <!-- Links -->
+          <div class="flex gap-8 font-mono text-xs text-gray-500 uppercase tracking-widest">
+            <a href="/" class="hover:text-red-500 transition-colors">Main HQ</a>
+            <a href="/join-us" class="hover:text-red-500 transition-colors">Enlist</a>
+            <a href="/articles" class="hover:text-red-500 transition-colors">Intel</a>
+          </div>
+        </div>
+        
+        <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p class="text-[10px] font-mono text-gray-600 uppercase tracking-widest">
+            &copy; {new Date().getFullYear()} Nismara Group. All Rights Reserved.
+          </p>
+          <div class="flex gap-4 items-center">
+            <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+            <span class="text-[10px] font-mono text-gray-600 uppercase tracking-widest">Secure Connection</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+</Layout>
+
+

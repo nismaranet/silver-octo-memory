@@ -25,4 +25,6 @@ pnpm-debug.log*
 .idea/
 AGENTS.md
 
-
+public/
+.vercel/
+studio/

@@ -1,6 +1,6 @@
 import { sanityClient } from "sanity:client";
 import { defineQuery } from "groq";
-import createImageUrlBuilder from "@sanity/image-url";
+import { createImageUrlBuilder } from "@sanity/image-url";
 
 export const builder = createImageUrlBuilder(sanityClient);
 
@@ -31,6 +31,9 @@ export const ARTICLE_BY_SLUG_QUERY = defineQuery(`*[_type == "article" && slug.c
     name,
     image
   },
+  categories[]->{
+    title
+  },
   seoTitle,
   seoDescription,
   ogImage,
@@ -43,4 +46,36 @@ export async function getArticles() {
 
 export async function getArticle(slug: string) {
   return await sanityClient.fetch(ARTICLE_BY_SLUG_QUERY, { slug });
+}
+
+export const FLEET_QUERY = defineQuery(`*[_type == "fleet" && defined(slug.current)] | order(name asc) {
+  _id,
+  name,
+  slug,
+  manufacturer,
+  mainImage,
+  range,
+  capacity
+}`);
+
+export const FLEET_BY_SLUG_QUERY = defineQuery(`*[_type == "fleet" && slug.current == $slug][0] {
+  name,
+  manufacturer,
+  mainImage,
+  gallery,
+  range,
+  capacity,
+  cruisingSpeed,
+  engineType,
+  length,
+  wingspan,
+  description
+}`);
+
+export async function getFleet() {
+  return await sanityClient.fetch(FLEET_QUERY);
+}
+
+export async function getFleetAircraft(slug: string) {
+  return await sanityClient.fetch(FLEET_BY_SLUG_QUERY, { slug });
 }

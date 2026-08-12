@@ -1,0 +1,445 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getFleet, urlFor } from '../utils/sanity';
+
+const fleetData = await getFleet();
+
+// We no longer fetch FSHub data on the server (build time).
+// The page is purely static for FSHub, and data is fetched dynamically on the client side from our cached Hybrid API.
+---
+
+<Layout title="Nismara Airlines - Elevate Your Journey" hideFooter={true}>
+  <!-- Specific Styles for Airlines Page -->
+  <style>
+    /* Force specific theme for Airlines (Midnight Blue & Champagne) */
+    .airlines-theme {
+      background-color: #0b1120; /* Deep midnight blue */
+      color: #f8fafc;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .text-champagne {
+      color: #d4af37;
+    }
+    
+    .bg-champagne {
+      background-color: #d4af37;
+    }
+
+    .border-champagne {
+      border-color: #d4af37;
+    }
+
+    /* Smooth Parallax Image */
+    .parallax-bg {
+      background-image: url('/images/nismara-airlines.webp');
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    /* Elegant Fade Up */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1.5s cubic-bezier(0.22, 1, 0.36, 1), transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .delay-200 { transition-delay: 200ms; }
+    .delay-400 { transition-delay: 400ms; }
+    .delay-600 { transition-delay: 600ms; }
+
+    /* Custom Animations for Hero */
+    @keyframes fly {
+      0% { left: -10%; opacity: 0; }
+      50% { opacity: 1; }
+      100% { left: 110%; opacity: 0; }
+    }
+  </style>
+
+  <main class="airlines-theme min-h-screen relative overflow-hidden">
+    
+    <!-- Fresh & Dynamic Hero Section -->
+    <section class="relative h-screen w-full flex items-center justify-center bg-[#070b15] overflow-hidden">
+      <!-- Animated Twilight Gradient Mesh -->
+      <div class="absolute inset-0 opacity-60">
+        <div class="absolute top-[-20%] left-[-10%] w-[70vw] h-[70vw] rounded-full bg-champagne/10 blur-[120px] mix-blend-screen animate-pulse" style="animation-duration: 8s;"></div>
+        <div class="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-[#0284c7]/20 blur-[150px] mix-blend-screen animate-pulse" style="animation-duration: 12s;"></div>
+      </div>
+
+      <!-- Animated Flight Path Line -->
+      <div class="absolute top-1/2 left-0 w-full h-[1px] bg-white/5 -translate-y-1/2">
+        <div class="h-full w-32 bg-gradient-to-r from-transparent via-champagne to-transparent absolute top-0 left-0 animate-[fly_3s_ease-in-out_infinite]"></div>
+      </div>
+
+      <div class="relative z-10 w-full px-6 flex flex-col items-center justify-center">
+        <!-- Rotating Compass/Radar element -->
+        <div class="w-24 h-24 mb-8 relative flex items-center justify-center fade-up">
+          <svg class="w-full h-full animate-[spin_20s_linear_infinite] text-champagne/30" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.5">
+            <circle cx="50" cy="50" r="48" stroke-dasharray="2 6" />
+            <circle cx="50" cy="50" r="30" stroke-width="0.2" />
+            <path d="M50 10 L50 90 M10 50 L90 50" stroke-width="0.2" />
+          </svg>
+          <div class="absolute w-1.5 h-1.5 bg-champagne rounded-full shadow-[0_0_10px_#d4af37] animate-pulse"></div>
+        </div>
+
+        <h1 class="font-sans text-[15vw] md:text-[12vw] leading-none font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-[#0b1120] tracking-tighter uppercase fade-up delay-200">
+          Nismara
+        </h1>
+        <h2 class="font-serif text-3xl md:text-5xl lg:text-6xl text-champagne italic font-light -mt-4 md:-mt-8 fade-up delay-400">
+          Airlines
+        </h2>
+        
+        <div class="mt-16 md:mt-24 flex gap-8 md:gap-16 font-mono text-[8px] md:text-[10px] text-white/40 tracking-widest uppercase fade-up delay-600">
+          <div class="flex flex-col items-center">
+            <span class="text-white/80 mb-2">Status</span>
+            <span class="text-[#0284c7] animate-pulse">Airborne</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <span class="text-white/80 mb-2">Fleet</span>
+            <span>Active</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <span class="text-white/80 mb-2">Clearance</span>
+            <span>Granted</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Operational Statistics -->
+    <section class="py-16 bg-[#070b15] border-t border-white/5 relative z-20">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-12">
+          
+          <div class="flex-shrink-0 text-center md:text-left fade-up">
+            <span class="text-champagne text-[10px] tracking-widest uppercase mb-2 block">Live Telemetry</span>
+            <h3 class="font-serif text-3xl text-white font-light">Global Operations</h3>
+          </div>
+
+          <div class="flex-1 w-full grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12">
+            <div class="flex flex-col items-center md:items-start fade-up delay-200">
+              <span class="text-[10px] text-white/40 uppercase tracking-widest mb-1">Total Flights</span>
+              <span class="text-2xl md:text-3xl text-white font-light" id="stat-flights">-</span>
+            </div>
+            
+            <div class="flex flex-col items-center md:items-start fade-up delay-400">
+              <span class="text-[10px] text-white/40 uppercase tracking-widest mb-1">Flight Hours</span>
+              <span class="text-2xl md:text-3xl text-white font-light"><span id="stat-hours">-</span> <span class="text-sm text-champagne">hrs</span></span>
+            </div>
+
+            <div class="flex flex-col items-center md:items-start fade-up delay-600">
+              <span class="text-[10px] text-white/40 uppercase tracking-widest mb-1">Distance Flown</span>
+              <span class="text-2xl md:text-3xl text-white font-light"><span id="stat-distance">-</span> <span class="text-sm text-champagne">nm</span></span>
+            </div>
+
+            <div class="flex flex-col items-center md:items-start fade-up delay-600">
+              <span class="text-[10px] text-white/40 uppercase tracking-widest mb-1">Active Crew</span>
+              <span class="text-2xl md:text-3xl text-white font-light"><span id="stat-pilots">-</span> <span class="text-sm text-champagne">Pilots</span></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- The Experience / Classes Section -->
+    <section id="experience" class="py-32 relative z-10 bg-[#0b1120]">
+      <div class="max-w-7xl mx-auto px-6">
+        
+        <div class="text-center mb-24 fade-up">
+          <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl text-white font-light mb-6">A New Standard of Travel</h2>
+          <div class="w-12 h-[1px] bg-champagne mx-auto mb-6"></div>
+          <p class="text-white/60 font-light text-sm md:text-base max-w-xl mx-auto">
+            Setiap detil layanan kami dirancang untuk melampaui ekspektasi Anda. Dari kenyamanan kabin hingga ketepatan waktu operasional.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24 items-center mb-32">
+          <!-- Image -->
+          <div class="aspect-[4/5] rounded-t-full overflow-hidden border border-white/5 relative fade-up">
+            <!-- Placeholder for first class image, using sim-atmosphere or generic -->
+            <img src="/images/sim-atmosphere.png" alt="First Class Experience" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity duration-700" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0b1120] via-transparent to-transparent"></div>
+          </div>
+          <!-- Text -->
+          <div class="fade-up delay-200">
+            <span class="text-champagne text-xs tracking-[0.2em] uppercase mb-4 block">Nismara First</span>
+            <h3 class="font-serif text-3xl md:text-4xl text-white font-light mb-6">Unrivaled Comfort</h3>
+            <p class="text-white/70 font-light leading-relaxed mb-8">
+              Kabin privat yang dirancang untuk privasi absolut. Nikmati layanan gastronomi eksklusif, hiburan dalam penerbangan premium, dan kursi yang dapat direbahkan menjadi tempat tidur datar sempurna. Nismara First bukan sekadar penerbangan, melainkan sebuah destinasi.
+            </p>
+            <ul class="space-y-4">
+              <li class="flex items-center gap-4 text-sm text-white/80 font-light">
+                <span class="w-1.5 h-1.5 rounded-full bg-champagne"></span> Exclusive Lounge Access
+              </li>
+              <li class="flex items-center gap-4 text-sm text-white/80 font-light">
+                <span class="w-1.5 h-1.5 rounded-full bg-champagne"></span> Dedicated Cabin Crew
+              </li>
+              <li class="flex items-center gap-4 text-sm text-white/80 font-light">
+                <span class="w-1.5 h-1.5 rounded-full bg-champagne"></span> Fully Flat Beds
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- The Fleet Section -->
+    <section class="py-32 relative z-10 bg-white text-[#0b1120]">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-20 fade-up">
+          <div>
+            <span class="text-champagne text-xs tracking-[0.2em] uppercase mb-4 block">Our Wings</span>
+            <h2 class="font-serif text-4xl md:text-5xl font-light text-[#0b1120]">The Fleet</h2>
+          </div>
+          <p class="text-[#0b1120]/60 font-light max-w-sm mt-6 md:mt-0 text-sm">
+            Beroperasi dengan armada modern dan efisien, Nismara Airlines memastikan keselamatan dan kenyamanan berstandar global.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {fleetData.length > 0 ? fleetData.map((aircraft: any, index: number) => (
+            <a href={`/airlines/fleet/${aircraft.slug?.current}`} class={`group fade-up block ${index % 3 !== 0 ? 'delay-' + (index%3)*200 : ''}`}>
+              <div class="aspect-[16/9] bg-gray-100 overflow-hidden mb-6 relative">
+                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10 duration-700"></div>
+                <img src={aircraft.mainImage ? urlFor(aircraft.mainImage).width(800).height(450).url() : "/images/nismara-airlines.webp"} alt={aircraft.name} class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" />
+              </div>
+              <h3 class="font-serif text-2xl mb-2 text-[#0b1120] group-hover:text-champagne transition-colors">{aircraft.name}</h3>
+              <p class="text-[#0b1120]/60 text-sm font-light flex justify-between border-b border-gray-200 py-2">
+                <span>Range</span>
+                <span class="font-medium text-[#0b1120]">{aircraft.range || '-'}</span>
+              </p>
+              <p class="text-[#0b1120]/60 text-sm font-light flex justify-between py-2">
+                <span>Capacity</span>
+                <span class="font-medium text-[#0b1120]">{aircraft.capacity || '-'}</span>
+              </p>
+            </a>
+          )) : (
+            <p class="col-span-3 text-center text-gray-400 font-light py-12">No fleet data available. Add aircraft in Sanity Studio.</p>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <!-- Recent Flight Reports -->
+    <section class="py-24 relative z-10 bg-white text-[#0b1120]">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16 fade-up">
+          <div>
+            <span class="text-champagne text-xs tracking-[0.2em] uppercase mb-4 block">Logbook</span>
+            <h2 class="font-serif text-4xl md:text-5xl font-light text-[#0b1120]">Recent Flights</h2>
+          </div>
+          <p class="text-[#0b1120]/60 font-light max-w-sm mt-6 md:mt-0 text-sm">
+            Catatan penerbangan terbaru dari armada Nismara Airlines yang tercatat di jaringan FSHub secara *real-time*.
+          </p>
+        </div>
+
+        <div class="overflow-x-auto fade-up delay-200">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b-2 border-[#0b1120]/10 font-mono text-[10px] uppercase tracking-widest text-[#0b1120]/50">
+                <th class="py-4 pr-6 font-medium">Pilot</th>
+                <th class="py-4 px-6 font-medium">Flight</th>
+                <th class="py-4 px-6 font-medium">Route</th>
+                <th class="py-4 px-6 font-medium">Aircraft</th>
+                <th class="py-4 px-6 font-medium">Landing Rate</th>
+                <th class="py-4 pl-6 font-medium text-right">Status</th>
+              </tr>
+            </thead>
+            <tbody class="text-sm font-light" id="flights-table-body">
+              <tr>
+                <td colspan="6" class="py-12 text-center text-gray-400 font-mono text-xs uppercase tracking-widest">
+                  <span class="animate-pulse">Loading live telemetry...</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Global Network (Minimalist World Map Concept) -->
+    <section class="py-32 relative z-10 bg-[#070b15] overflow-hidden">
+      <!-- Decorative Lines -->
+      <div class="absolute inset-0 opacity-10 pointer-events-none flex justify-center items-center">
+        <!-- SVG curves simulating flight paths -->
+        <svg viewBox="0 0 1000 500" class="w-[150%] h-[150%] md:w-full md:h-full stroke-champagne" fill="none">
+          <path d="M100,250 Q300,50 500,250 T900,250" stroke-width="1" stroke-dasharray="5 5" class="animate-pulse" />
+          <path d="M200,350 Q400,100 600,250 T1000,150" stroke-width="0.5" stroke-dasharray="2 2" opacity="0.5" />
+          <path d="M50,150 Q350,300 550,150 T950,300" stroke-width="0.5" stroke-dasharray="2 2" opacity="0.5" />
+        </svg>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-6 text-center relative z-20 fade-up">
+        <h2 class="font-serif text-4xl md:text-6xl text-white font-light mb-6">Connecting The Virtual World</h2>
+        <p class="text-white/60 font-light text-sm md:text-base max-w-2xl mx-auto mb-16">
+          Dari gemerlapnya pusat kota Los Santos hingga lanskap tenang Euro Truck Simulator. Jaringan penerbangan kami menjembatani setiap jarak dengan sempurna.
+        </p>
+
+        <a href="/join-us" class="inline-flex items-center justify-center px-12 py-5 bg-champagne text-[#0b1120] hover:bg-white transition-colors duration-500 font-medium text-xs tracking-[0.2em] uppercase">
+          Book Your Career Flight
+        </a>
+      </div>
+    </section>
+
+    <!-- Elegant Airlines Footer -->
+    <footer class="bg-[#050810] pt-24 pb-12 relative z-10 border-t border-white/5">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+          
+          <!-- Brand -->
+          <div class="md:col-span-1">
+            <h3 class="font-serif text-2xl text-white mb-2 tracking-tight">Nismara <span class="italic text-champagne">Airlines</span></h3>
+            <p class="text-white/40 text-xs font-light leading-relaxed">
+              Elevating virtual aviation to new heights of luxury and precision.
+            </p>
+          </div>
+
+          <!-- Links Group 1 -->
+          <div>
+            <h4 class="text-white text-xs font-medium tracking-widest uppercase mb-6">Experience</h4>
+            <ul class="space-y-4">
+              <li><a href="#" class="text-white/50 hover:text-champagne transition-colors text-sm font-light">Nismara First</a></li>
+              <li><a href="#" class="text-white/50 hover:text-champagne transition-colors text-sm font-light">Business Class</a></li>
+              <li><a href="#" class="text-white/50 hover:text-champagne transition-colors text-sm font-light">Economy Class</a></li>
+              <li><a href="#" class="text-white/50 hover:text-champagne transition-colors text-sm font-light">Lounges</a></li>
+            </ul>
+          </div>
+
+          <!-- Links Group 2 -->
+          <div>
+            <h4 class="text-white text-xs font-medium tracking-widest uppercase mb-6">Information</h4>
+            <ul class="space-y-4">
+              <li><a href="#" class="text-white/50 hover:text-champagne transition-colors text-sm font-light">Baggage</a></li>
+              <li><a href="#" class="text-white/50 hover:text-champagne transition-colors text-sm font-light">Flight Status</a></li>
+              <li><a href="/articles" class="text-white/50 hover:text-champagne transition-colors text-sm font-light">News & Press</a></li>
+            </ul>
+          </div>
+
+          <!-- Links Group 3 -->
+          <div>
+            <h4 class="text-white text-xs font-medium tracking-widest uppercase mb-6">Careers</h4>
+            <ul class="space-y-4">
+              <li><a href="/join-us" class="text-white/50 hover:text-champagne transition-colors text-sm font-light">Pilots</a></li>
+              <li><a href="/join-us" class="text-white/50 hover:text-champagne transition-colors text-sm font-light">Cabin Crew</a></li>
+              <li><a href="/join-us" class="text-white/50 hover:text-champagne transition-colors text-sm font-light">Ground Staff</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p class="text-white/30 text-xs font-light">
+            &copy; {new Date().getFullYear()} Nismara Group Airlines Division. All rights reserved.
+          </p>
+          <div class="flex gap-6">
+            <a href="#" class="text-white/30 hover:text-white transition-colors">Instagram</a>
+            <a href="#" class="text-white/30 hover:text-white transition-colors">Discord</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const res = await fetch('/api/flights');
+      if (!res.ok) throw new Error('Network response was not ok');
+      const data = await res.json();
+      
+      // Update Stats
+      if (data.stats && data.stats.all_time) {
+        const sf = document.getElementById('stat-flights');
+        if (sf) sf.textContent = data.stats.all_time.total_flights.toLocaleString();
+        
+        const sh = document.getElementById('stat-hours');
+        if (sh) sh.textContent = Math.round(data.stats.all_time.total_hours).toLocaleString();
+        
+        const sd = document.getElementById('stat-distance');
+        if (sd) sd.textContent = data.stats.all_time.total_distance.toLocaleString();
+        
+        const sp = document.getElementById('stat-pilots');
+        if (sp) sp.textContent = data.stats.total_pilots;
+      }
+
+      // Update Flights
+      const tbody = document.getElementById('flights-table-body');
+      if (tbody) {
+        if (data.flights && data.flights.length > 0) {
+          tbody.innerHTML = ''; // clear loading state
+          data.flights.forEach((flight: any) => {
+            const tr = document.createElement('tr');
+            tr.className = 'border-b border-[#0b1120]/5 hover:bg-gray-50 transition-colors group';
+            
+            const landingClass = flight.landing_rate > -300 ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700';
+            const dep = flight.departure?.iata || flight.departure?.icao || '???';
+            const arr = flight.arrival?.iata || flight.arrival?.icao || '???';
+            const callsign = flight.plan?.callsign || ('NAT' + String(flight.id).slice(-3));
+            const aircraft = flight.aircraft?.icao_name || flight.aircraft?.type || 'Unknown Aircraft';
+            const pilot = flight.user?.name || 'Unknown';
+
+            tr.innerHTML = `
+              <td class="py-6 pr-6 font-medium text-[#0b1120] whitespace-nowrap">${pilot}</td>
+              <td class="py-6 px-6 whitespace-nowrap"><div class="font-mono text-xs text-champagne font-medium">${callsign}</div></td>
+              <td class="py-6 px-6 whitespace-nowrap">
+                <div class="flex items-center gap-3">
+                  <span class="font-medium text-[#0b1120]">${dep}</span>
+                  <svg class="w-3 h-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                  <span class="font-medium text-[#0b1120]">${arr}</span>
+                </div>
+              </td>
+              <td class="py-6 px-6 text-gray-500 whitespace-nowrap">${aircraft}</td>
+              <td class="py-6 px-6 whitespace-nowrap"><span class="font-mono text-xs px-2 py-1 rounded ${landingClass}">${flight.landing_rate} fpm</span></td>
+              <td class="py-6 pl-6 text-right whitespace-nowrap">
+                <span class="inline-flex items-center gap-2 text-xs font-medium text-green-600 uppercase tracking-widest">
+                  <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                  Arrived
+                </span>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+        } else {
+          tbody.innerHTML = `<tr><td colspan="6" class="py-12 text-center text-gray-400 font-mono text-xs uppercase tracking-widest">No recent flights found</td></tr>`;
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching live data:', error);
+      const tbodyError = document.getElementById('flights-table-body');
+      if (tbodyError) {
+        tbodyError.innerHTML = `<tr><td colspan="6" class="py-12 text-center text-red-400 font-mono text-xs uppercase tracking-widest">Failed to load telemetry</td></tr>`;
+      }
+    }
+  });
+</script>
+
+<script>
+  // Simple script for triggering fade-up animations on scroll
+  document.addEventListener("DOMContentLoaded", () => {
+    const fadeElements = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target); // Animate only once
+        }
+      });
+    }, { 
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    });
+    
+    fadeElements.forEach(el => observer.observe(el));
+  });
+</script>

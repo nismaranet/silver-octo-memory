@@ -11,9 +11,11 @@ export interface Props {
   type?: string;
   author?: string;
   keywords?: string[];
+  hideFooter?: boolean;
+  noPaddingTop?: boolean;
 }
 
-const { title, description, image, type, author, keywords } = Astro.props;
+const { title, description, image, type, author, keywords, hideFooter = false, noPaddingTop = false } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
@@ -53,10 +55,10 @@ const { title, description, image, type, author, keywords } = Astro.props;
       window.localStorage.setItem('theme', theme);
     </script>
 	</head>
-	<body class="pt-20">
+	<body class={`bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300 ${noPaddingTop ? '' : 'pt-20'}`}>
 		<Navbar />
 		<slot />
-		<Footer />
+		{!hideFooter && <Footer />}
 
     <script is:inline>
       document.addEventListener('DOMContentLoaded', () => {

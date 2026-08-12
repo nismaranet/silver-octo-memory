@@ -13,10 +13,12 @@ const { PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET } = loadEnv(
 );
 
 import sitemap from '@astrojs/sitemap';
+import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://nismara.web.id',
+  adapter: vercel(),
   vite: {
     plugins: [tailwindcss()],
     optimizeDeps: {
