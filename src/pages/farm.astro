@@ -1,0 +1,314 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Nismara Farm - Virtual Agriculture" description="Nismara Farm adalah divisi Farming Simulator dari Nismara World. Rasakan pengalaman manajemen lahan, agrikultur, dan peternakan virtual yang realistis dan kolaboratif." hideFooter={true}>
+  <!-- Nismara Farm Specific Styles -->
+  <style>
+    /* Premium Agriculture Theme */
+    .farm-theme {
+      background-color: #0d120e; /* Deep forest green / dark earthy tone */
+      color: #f0fdf4; /* Very light green / off-white */
+      font-family: 'Inter', sans-serif;
+    }
+
+    .text-amber-glow {
+      color: #fbbf24;
+      text-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+    }
+    
+    .text-leaf {
+      color: #86efac;
+    }
+
+    .border-leaf {
+      border-color: rgba(134, 239, 172, 0.3);
+    }
+
+    /* Ambient Sun Glow Effect */
+    .sun-glow {
+      position: absolute;
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(circle, rgba(251,191,36,0.15) 0%, rgba(0,0,0,0) 70%);
+      border-radius: 50%;
+      top: -10%;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .earth-glow {
+      position: absolute;
+      width: 70vw;
+      height: 40vw;
+      background: radial-gradient(ellipse, rgba(34,197,94,0.1) 0%, rgba(0,0,0,0) 70%);
+      bottom: -10%;
+      right: -20%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Grain Overlay for rustic feel */
+    .grain-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZmlsdGVyIGlkPSJub2lzZUZpbHRlciI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuODUiIG51bU9jdGF2ZXM9IjMiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgibm9pc2VGaWx0ZXIpIi8+PC9zdmc+');
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Reveal Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .delay-100 { transition-delay: 100ms; }
+    .delay-200 { transition-delay: 200ms; }
+    .delay-300 { transition-delay: 300ms; }
+
+    /* Floating Animation */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+  </style>
+
+  <main class="farm-theme min-h-screen relative overflow-hidden font-sans">
+    
+    <!-- Hero Section -->
+    <section class="relative h-screen flex flex-col justify-center items-center overflow-hidden border-b border-green-900/30">
+      <div class="sun-glow"></div>
+      
+      <!-- Background Image -->
+      <div class="absolute inset-0 z-0">
+        <img src="/images/farming-simulator.webp" alt="Nismara Farm Simulator" class="w-full h-full object-cover opacity-30 object-center transform scale-105 animate-[pulse_20s_ease-in-out_infinite]" />
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0d120e] via-transparent to-black/50"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-[#0d120e]/80 via-transparent to-[#0d120e]/80"></div>
+      </div>
+      
+      <div class="grain-overlay"></div>
+
+      <!-- Hero Content -->
+      <div class="relative z-20 text-center px-6 mt-16 max-w-5xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-green-500/30 bg-green-950/40 text-xs font-medium tracking-[0.2em] uppercase text-leaf mb-8 backdrop-blur-md reveal">
+          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          Farming Simulator Division
+        </div>
+        
+        <h1 class="text-[12vw] md:text-[8vw] leading-none font-serif font-black tracking-tighter mb-4 reveal delay-100">
+          Nismara <span class="text-amber-glow italic font-light">Farm</span>
+        </h1>
+        
+        <p class="text-sm md:text-lg text-green-100/70 font-light max-w-2xl mx-auto mb-10 reveal delay-200 leading-relaxed">
+          Menyatukan presisi manajerial dengan kekayaan alam virtual. Bergabunglah dalam koperasi agrikultur terbesar di Nismara World dan bangun kekaisaran tani Anda.
+        </p>
+        
+        <div class="reveal delay-300">
+          <a href="#about" class="inline-flex items-center justify-center w-14 h-14 rounded-full border border-green-500/30 hover:border-amber-400/50 hover:bg-amber-400/10 transition-all duration-500 group">
+            <svg class="w-6 h-6 text-green-400 group-hover:text-amber-400 transform group-hover:translate-y-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 lg:py-32 relative z-10 bg-[#0d120e]">
+      <div class="earth-glow"></div>
+      <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          
+          <div class="reveal">
+            <h2 class="text-3xl md:text-5xl font-serif font-light mb-8 text-white leading-tight">
+              Kultivasi Masa Depan <br/>
+              <span class="font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-green-400">Agrikultur Virtual</span>
+            </h2>
+            <p class="text-green-50/60 font-light text-base md:text-lg leading-relaxed mb-6">
+              Nismara Farm adalah rumah bagi para pegiat <strong class="text-white font-medium">Farming Simulator</strong> dalam ekosistem Nismara Group. Kami berfokus pada kolaborasi koperasi berskala besar, di mana setiap anggota memegang peranan penting mulai dari penggarap lahan, operator alat berat, hingga manajer logistik.
+            </p>
+            <p class="text-green-50/60 font-light text-base md:text-lg leading-relaxed mb-8">
+              Bukan sekadar menanam dan memanen, kami menerapkan manajemen ekonomi yang ketat, rotasi tanaman berkelanjutan, dan pemanfaatan mesin-mesin agrikultur mutakhir untuk mendominasi pasar komoditas virtual.
+            </p>
+            
+            <div class="grid grid-cols-2 gap-6 pt-8 border-t border-leaf">
+              <div>
+                <div class="text-3xl font-serif text-amber-400 mb-1">10k+</div>
+                <div class="text-xs font-mono uppercase tracking-widest text-green-400/70">Hectares Managed</div>
+              </div>
+              <div>
+                <div class="text-3xl font-serif text-amber-400 mb-1">24/7</div>
+                <div class="text-xs font-mono uppercase tracking-widest text-green-400/70">Co-op Servers</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Decorative Image Grid -->
+          <div class="grid grid-cols-2 gap-4 h-[500px] reveal delay-200">
+            <div class="col-span-1 row-span-2 rounded-2xl overflow-hidden border border-green-900/50 relative animate-float">
+              <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10"></div>
+              <img src="/images/farming-simulator.webp" alt="Tractor" class="w-full h-full object-cover" />
+            </div>
+            <div class="col-span-1 row-span-1 rounded-2xl overflow-hidden border border-green-900/50 relative animate-float" style="animation-delay: -2s;">
+              <div class="absolute inset-0 bg-gradient-to-tr from-amber-900/40 to-transparent z-10"></div>
+              <img src="/images/sim-atmosphere.png" alt="Farm Sunset" class="w-full h-full object-cover" />
+            </div>
+            <div class="col-span-1 row-span-1 rounded-2xl overflow-hidden bg-green-950 border border-green-800/50 flex flex-col items-center justify-center p-6 text-center animate-float" style="animation-delay: -4s;">
+              <svg class="w-10 h-10 text-amber-400 mb-3 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+              <h3 class="font-serif text-lg text-white mb-1">Precision</h3>
+              <p class="text-xs text-green-400/60 font-light">Yield Optimization</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Sectors / Divisions inside Farm -->
+    <section class="py-24 lg:py-32 relative z-10 bg-[#0a0e0b]">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16 lg:mb-24 reveal">
+          <span class="text-amber-500 text-xs font-mono uppercase tracking-[0.2em] block mb-4">Core Sectors</span>
+          <h2 class="text-3xl md:text-5xl font-serif font-light text-white">Bidang Spesialisasi</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Card 1 -->
+          <div class="group relative bg-[#0d120e] border border-green-900/30 rounded-2xl p-8 hover:border-amber-500/50 transition-colors duration-500 reveal">
+            <div class="absolute inset-0 bg-gradient-to-b from-amber-500/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            
+            <div class="w-14 h-14 rounded-xl bg-green-950 border border-green-800 flex items-center justify-center mb-8 group-hover:-translate-y-2 transition-transform duration-500">
+              <svg class="w-7 h-7 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            
+            <h3 class="font-serif text-2xl text-white mb-4">Arable Farming</h3>
+            <p class="text-green-50/50 font-light text-sm leading-relaxed mb-6">
+              Fokus pada produksi tanaman skala besar seperti gandum, jagung, kedelai, dan kapas. Melibatkan penggunaan traktor berat, seeder presisi, dan combine harvester raksasa.
+            </p>
+            <ul class="space-y-2 text-xs font-mono text-green-400/80">
+              <li class="flex items-center gap-2"><span class="w-1 h-1 bg-amber-500 rounded-full"></span> Crop Rotation</li>
+              <li class="flex items-center gap-2"><span class="w-1 h-1 bg-amber-500 rounded-full"></span> Soil Fertilization</li>
+            </ul>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="group relative bg-[#0d120e] border border-green-900/30 rounded-2xl p-8 hover:border-amber-500/50 transition-colors duration-500 reveal delay-100">
+            <div class="absolute inset-0 bg-gradient-to-b from-amber-500/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            
+            <div class="w-14 h-14 rounded-xl bg-green-950 border border-green-800 flex items-center justify-center mb-8 group-hover:-translate-y-2 transition-transform duration-500">
+              <svg class="w-7 h-7 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg>
+            </div>
+            
+            <h3 class="font-serif text-2xl text-white mb-4">Animal Husbandry</h3>
+            <p class="text-green-50/50 font-light text-sm leading-relaxed mb-6">
+              Manajemen peternakan mutakhir untuk sapi perah, domba, babi, dan unggas. Menjaga nutrisi dan suplai pakan konstan untuk memaksimalkan hasil produksi hewan.
+            </p>
+            <ul class="space-y-2 text-xs font-mono text-green-400/80">
+              <li class="flex items-center gap-2"><span class="w-1 h-1 bg-amber-500 rounded-full"></span> TMR Mixing</li>
+              <li class="flex items-center gap-2"><span class="w-1 h-1 bg-amber-500 rounded-full"></span> Dairy Production</li>
+            </ul>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="group relative bg-[#0d120e] border border-green-900/30 rounded-2xl p-8 hover:border-amber-500/50 transition-colors duration-500 reveal delay-200">
+            <div class="absolute inset-0 bg-gradient-to-b from-amber-500/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            
+            <div class="w-14 h-14 rounded-xl bg-green-950 border border-green-800 flex items-center justify-center mb-8 group-hover:-translate-y-2 transition-transform duration-500">
+              <svg class="w-7 h-7 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
+            </div>
+            
+            <h3 class="font-serif text-2xl text-white mb-4">Forestry & Logistics</h3>
+            <p class="text-green-50/50 font-light text-sm leading-relaxed mb-6">
+              Ekstraksi kayu industri dan manajemen rantai pasokan. Penggunaan mesin penebang khusus dan armada transportasi logistik untuk mendistribusikan hasil tani ke pabrik.
+            </p>
+            <ul class="space-y-2 text-xs font-mono text-green-400/80">
+              <li class="flex items-center gap-2"><span class="w-1 h-1 bg-amber-500 rounded-full"></span> Wood Harvesting</li>
+              <li class="flex items-center gap-2"><span class="w-1 h-1 bg-amber-500 rounded-full"></span> Transport & Cargo</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Join Us CTA -->
+    <section class="py-24 lg:py-32 relative z-10 overflow-hidden bg-[#0d120e] border-t border-green-900/30">
+      <!-- Decor -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[400px] bg-green-900/20 blur-[120px] rounded-full pointer-events-none"></div>
+      
+      <div class="relative z-20 text-center px-6 max-w-3xl mx-auto reveal">
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-serif font-light text-white mb-6">
+          Siap Mengolah <span class="font-black italic text-amber-500">Lahan Baru?</span>
+        </h2>
+        <p class="text-green-50/60 font-light text-base md:text-lg mb-12">
+          Bergabunglah dengan kru Nismara Farm. Kami mencari petani virtual dedikatif yang siap bekerja dalam tim, mengendarai mesin-mesin ikonik, dan membangun agrikultur modern.
+        </p>
+        
+        <a href="https://career.nismara.web.id" target="_blank" class="inline-flex items-center gap-3 bg-amber-500 hover:bg-amber-400 text-[#0d120e] px-8 py-4 rounded-full font-bold uppercase tracking-widest text-sm transition-all duration-300 transform hover:scale-105 shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:shadow-[0_0_30px_rgba(245,158,11,0.5)]">
+          Join The Co-op
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- Farm Footer -->
+    <footer class="bg-[#080b08] border-t border-green-900/30 pt-16 pb-8 relative z-10">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-8 mb-12">
+          
+          <div class="flex flex-col items-center md:items-start text-center md:text-left">
+            <div class="text-2xl font-serif font-black text-white mb-2">Nismara <span class="italic text-amber-500 font-light">Farm</span></div>
+            <div class="text-[10px] font-mono text-green-500/60 tracking-widest uppercase">Farming Simulator Division</div>
+          </div>
+          
+          <div class="flex gap-6 font-mono text-xs text-green-500/60 uppercase tracking-widest">
+            <a href="/" class="hover:text-amber-400 transition-colors">HQ</a>
+            <a href="https://career.nismara.web.id" target="_blank" class="hover:text-amber-400 transition-colors">Join</a>
+            <a href="/articles" class="hover:text-amber-400 transition-colors">News</a>
+          </div>
+        </div>
+        
+        <div class="border-t border-green-900/30 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p class="text-[10px] font-mono text-green-500/40 uppercase tracking-widest">
+            &copy; {new Date().getFullYear()} Nismara Group. All Rights Reserved.
+          </p>
+          <div class="flex gap-3 items-center">
+            <span class="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse shadow-[0_0_5px_#f59e0b]"></span>
+            <span class="text-[10px] font-mono text-green-500/40 uppercase tracking-widest">Server Online</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+</Layout>
+
+<script>
+  // Simple intersection observer for reveal animations
+  document.addEventListener("DOMContentLoaded", () => {
+    const reveals = document.querySelectorAll('.reveal');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          // observer.unobserve(entry.target); // Optional: if you only want it to animate once
+        }
+      });
+    }, { 
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    });
+    
+    reveals.forEach(el => observer.observe(el));
+  });
+</script>

@@ -25,13 +25,21 @@ Consult these guides before working on related tasks:
 
 **Nismara Group Website** is built using a modern, decoupled architecture (Headless CMS + Static Site Generator).
 The Nismara Group is a virtual company group dedicated to simulation gaming. It oversees various virtual divisions including:
+
 - **Nismara Transport**: Logistics and passenger division (https://transport.nismara.web.id)
 - **Nismara Airlines**: Aviation division
 - **Nismara Racing**: Racing division (https://racing.nismara.web.id)
 - **Nismara World**: Gaming subdivisions including Rice Kencur (Minecraft), BLCK (GTA V / Action), and Nismara Farm (Farming Simulator).
-*Context*: This project aims to build the overarching corporate website for these virtual entities, moving away from generic media/digital agency themes.
+  _Context_: This project aims to build the overarching corporate website for these virtual entities, moving away from generic media/digital agency themes.
+
+**Nismara Group Social Media**
+
+- **Discord** : https://link.nismara.web.id/discord
+- **Instagram** : https://link.nismara.web.id/instagram
+- **Youtube** : https://link.nismara.web.id/youtube
 
 ### Core Technologies
+
 1. **Frontend**: [Astro](https://astro.build/) (Static Site Generation / SSR)
 2. **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) with a custom design system (`src/styles/global.css`).
 3. **Headless CMS**: [Sanity Studio](https://www.sanity.io/) (Standalone setup in `studio/` folder).
@@ -40,16 +48,19 @@ The Nismara Group is a virtual company group dedicated to simulation gaming. It 
 ## Work Accomplished
 
 ### 1. Initialization
+
 - Scaffolded Astro project and integrated Tailwind CSS.
 - Scaffolded Standalone Sanity Studio in `studio/`.
 - Configured Cloudflare R2 credentials in `.env` and created a client wrapper (`src/lib/r2.ts`).
 
 ### 2. CMS Backend Setup
+
 - Switched from embedded Studio to Standalone Studio to avoid Vite/React compiler conflicts.
 - Configured Media & Publishing Schemas (`article`, `author`, `category`).
 - Deployed schemas to Sanity Content Lake (`production` dataset).
 
 ### 3. Frontend Implementation
+
 - **Data Fetching**: Created `src/utils/sanity.ts` utilizing `sanity:client`, `groq`, and `@sanity/image-url`.
 - **Global UI**: Developed reusable `Navbar.astro` (Glassmorphism design) and `Footer.astro` components, integrated via `Layout.astro`.
 - **Pages**:
