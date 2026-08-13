@@ -6,7 +6,7 @@ const articles = await getArticles();
 const recentArticles = articles.slice(0, 3);
 ---
 
-<Layout>
+<Layout animeFooter={true}>
   <!-- Hero Section (Asymmetric & Minimal) -->
   <section class="relative pt-32 pb-24 lg:pt-48 lg:pb-32 overflow-hidden bg-white dark:bg-slate-950 transition-colors duration-500">
     <!-- Subtle Grid Background -->
@@ -54,7 +54,7 @@ const recentArticles = articles.slice(0, 3);
           </p>
           <div class="w-[1px] h-64 bg-gray-900 dark:bg-white"></div>
           <p class="vertical-text text-xl font-light tracking-[0.3em] text-gray-900 dark:text-white uppercase">
-            Est. 2024
+            Est. 2025
           </p>
         </div>
       </div>
@@ -523,7 +523,7 @@ const recentArticles = articles.slice(0, 3);
   </section>
 
   <!-- Final CTA Section -->
-  <section class="py-32 md:py-48 bg-white dark:bg-[#050505] transition-colors relative overflow-hidden flex items-center justify-center">
+  <section class="pt-32 pb-64 md:pt-48 md:pb-80 bg-white dark:bg-[#050505] transition-colors relative overflow-hidden flex items-center justify-center">
     
     <!-- Elegant Architectural SVG Background (Slowly Rotating) -->
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] md:w-[1200px] md:h-[1200px] pointer-events-none text-black/10 dark:text-white/10 flex items-center justify-center">

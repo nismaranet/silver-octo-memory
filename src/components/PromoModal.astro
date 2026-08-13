@@ -1,0 +1,107 @@
+---
+// src/components/PromoModal.astro
+// Mudah untuk di edit: Ubah isActive menjadi false jika ingin mematikan popup
+const isActive = true;
+
+// Ganti konten promosi di sini:
+const promo = {
+  id: "promo-august-2025", // Ubah ID ini jika ada promo baru agar user yang sudah close melihatnya lagi
+  title: "Open Recruitment Nismara Transport",
+  description: "Jadilah bagian dari keluarga besar Nismara Transport. Kami sedang mencari pengemudi handal untuk bergabung bersama kami di ETS2 dan ATS.",
+  image: "https://images.nismara.my.id/web/staff/transport/AmatoMasaki.webp",
+  ctaText: "Bergabung Sekarang",
+  ctaLink: "https://career.nismara.web.id",
+  hideDurationHours: 2 // Berapa jam popup disembunyikan setelah di-close
+};
+---
+
+{isActive && (
+  <div id="promo-modal-backdrop" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-500 px-4">
+    <div id="promo-modal-card" class="relative w-full max-w-md bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] transform scale-95 transition-transform duration-500">
+      
+      <!-- Close Button -->
+      <button id="promo-close-btn" class="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center bg-black/30 hover:bg-black/60 text-white rounded-full backdrop-blur-md transition-colors cursor-pointer" aria-label="Close Promo">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+
+      <!-- Image Header -->
+      <div class="w-full h-48 md:h-56 relative bg-primary-600">
+        <img src={promo.image} alt={promo.title} class="w-full h-full object-cover object-top" onerror="this.src='https://placehold.co/600x400/56365C/FFF?text=Nismara+Promo'" />
+        <!-- Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-white dark:from-gray-900 via-transparent to-transparent"></div>
+      </div>
+
+      <!-- Content -->
+      <div class="px-8 pb-8 pt-2 text-center relative -mt-6">
+        <span class="inline-block px-3 py-1 bg-primary-50 text-primary-600 dark:bg-primary-900/50 dark:text-primary-300 text-[10px] font-bold uppercase tracking-widest rounded-full mb-4 shadow-sm border border-primary-100 dark:border-primary-800">Special Highlight</span>
+        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3 leading-tight">{promo.title}</h3>
+        <p class="text-gray-500 dark:text-gray-400 text-sm mb-8 leading-relaxed">
+          {promo.description}
+        </p>
+        <a href={promo.ctaLink} target="_blank" class="block w-full py-3 px-4 bg-primary-600 hover:bg-primary-500 text-white font-bold text-sm tracking-wider uppercase rounded-xl transition-all hover:-translate-y-1 hover:shadow-[0_10px_20px_-10px_rgba(86,54,92,0.6)]">
+          {promo.ctaText}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script define:vars={{ promo }}>
+    document.addEventListener('DOMContentLoaded', () => {
+      const backdrop = document.getElementById('promo-modal-backdrop');
+      const card = document.getElementById('promo-modal-card');
+      const closeBtn = document.getElementById('promo-close-btn');
+
+      if (!backdrop || !card || !closeBtn) return;
+
+      const storageKey = `nismara_promo_closed_${promo.id}`;
+      const hideDurationMs = promo.hideDurationHours * 60 * 60 * 1000;
+
+      // Check localStorage
+      const closedAt = localStorage.getItem(storageKey);
+      let shouldShow = true;
+
+      if (closedAt) {
+        const timePassed = Date.now() - parseInt(closedAt, 10);
+        if (timePassed < hideDurationMs) {
+          shouldShow = false; // Still within the hidden duration
+        } else {
+          localStorage.removeItem(storageKey); // Expired, clean up
+        }
+      }
+
+      if (shouldShow) {
+        // Show modal with a slight delay for dramatic effect
+        setTimeout(() => {
+          backdrop.classList.remove('hidden');
+          // Trigger reflow for transition
+          void backdrop.offsetWidth;
+          backdrop.classList.remove('opacity-0');
+          card.classList.remove('scale-95');
+          card.classList.add('scale-100');
+        }, 1500); // Popup appears 1.5 seconds after page load
+      }
+
+      const closeModal = () => {
+        backdrop.classList.add('opacity-0');
+        card.classList.remove('scale-100');
+        card.classList.add('scale-95');
+        
+        // Save to localStorage
+        localStorage.setItem(storageKey, Date.now().toString());
+
+        setTimeout(() => {
+          backdrop.classList.add('hidden');
+        }, 500); // Wait for transition
+      };
+
+      closeBtn.addEventListener('click', closeModal);
+      
+      // Close on clicking outside the card
+      backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) {
+          closeModal();
+        }
+      });
+    });
+  </script>
+)}

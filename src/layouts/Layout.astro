@@ -2,7 +2,9 @@
 import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import AnimeFooter from '../components/AnimeFooter.astro';
 import SEO from '../components/SEO.astro';
+import PromoModal from '../components/PromoModal.astro';
 
 export interface Props {
   title?: string;
@@ -13,9 +15,10 @@ export interface Props {
   keywords?: string[];
   hideFooter?: boolean;
   noPaddingTop?: boolean;
+  animeFooter?: boolean;
 }
 
-const { title, description, image, type, author, keywords, hideFooter = false, noPaddingTop = false } = Astro.props;
+const { title, description, image, type, author, keywords, hideFooter = false, noPaddingTop = false, animeFooter = false } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
@@ -58,7 +61,8 @@ const { title, description, image, type, author, keywords, hideFooter = false, n
 	<body class={`bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300 ${noPaddingTop ? '' : 'pt-20'}`}>
 		<Navbar />
 		<slot />
-		{!hideFooter && <Footer />}
+		{!hideFooter && (animeFooter ? <AnimeFooter /> : <Footer />)}
+    <PromoModal />
 
     <script is:inline>
       document.addEventListener('DOMContentLoaded', () => {

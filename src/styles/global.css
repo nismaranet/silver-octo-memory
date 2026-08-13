@@ -5,13 +5,14 @@
 @theme {
   --font-sans: 'Inter', system-ui, sans-serif;
   
-  /* Primary Brand Colors */
-  --color-primary-50: #f0f9ff;
-  --color-primary-100: #e0f2fe;
-  --color-primary-600: #0284c7;
-  --color-primary-900: #0c4a6e;
-  
-  /* Semantic Theme Colors */
+  /* Primary Brand Colors - Nismara Group */
+  --color-primary-50: #fbf9fa;
+  --color-primary-100: #f4eef5;
+  --color-primary-300: #a78cae;
+  --color-primary-400: #795F80; /* Faded Purple */
+  --color-primary-600: #56365C; /* Lilac Shadow */
+  --color-primary-800: #3a223e;
+  --color-primary-900: #29162c;
   --color-bg-primary: var(--bg-primary);
   --color-bg-secondary: var(--bg-secondary);
   --color-text-primary: var(--text-primary);

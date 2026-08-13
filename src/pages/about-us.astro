@@ -36,37 +36,72 @@ const divisions = [
 
 const directors = [
   {
-    name: 'TBA',
-    role: 'Chief Executive Officer',
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&auto=format&fit=crop'
+    name: 'MzIchan',
+    role: 'President Director of Nismara',
+    image: 'https://images.nismara.my.id/web/staff/directors/Mzichan.webp'
   },
   {
-    name: 'TBA',
-    role: 'Chief Operating Officer',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop'
+    name: 'Sury0',
+    role: 'Chief Executive Officer of Nismara World',
+    image: 'https://images.nismara.my.id/web/staff/directors/5uryo.webp'
+  },
+  {
+    name: 'Lemper',
+    role: 'Chief Technology Officer of Nismara',
+    image: 'https://images.nismara.my.id/web/staff/directors/Lemper.webp'
+  },
+  {
+    name: 'Upie',
+    role: 'Chief Operating Officer of Nismara',
+    image: 'https://images.nismara.my.id/web/staff/directors/Upie.jpg'
   }
 ];
 
 const staff = [
   {
-    name: 'TBA',
-    role: 'Transport Manager',
-    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop'
+    name: 'Amato Masaki',
+    role: 'General Manager Transport',
+    image: 'https://images.nismara.my.id/web/staff/transport/AmatoMasaki.webp'
   },
   {
-    name: 'TBA',
-    role: 'Airlines Manager',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop'
+    name: 'Rains',
+    role: 'Deputy General Manager Transport',
+    image: 'https://images.nismara.my.id/web/staff/transport/Rains.png'
   },
   {
-    name: 'TBA',
-    role: 'Racing Director',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop'
+    name: 'Pappoy',
+    role: 'General Manager Racing',
+    image: 'https://images.nismara.my.id/web/staff/transport/Pappoy.webp'
   },
   {
-    name: 'TBA',
-    role: 'Community Lead',
-    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop'
+    name: 'LegenSegerr',
+    role: 'Staff of Nismara Transport',
+    image: 'https://images.nismara.my.id/web/staff/transport/LegenSegerr.png'
+  },
+    {
+    name: 'Misro',
+    role: 'Staff of Nismara Transport',
+    image: 'https://images.nismara.my.id/web/staff/transport/Misro.jpg'
+  },
+    {
+    name: 'Ciminyaw',
+    role: 'Staff of Nismara Transport',
+    image: 'https://images.nismara.my.id/web/staff/transport/ciminyaw.jpg'
+  },
+    {
+    name: 'Codename Zero',
+    role: 'Staff of Nismara Transport',
+    image: 'https://images.nismara.my.id/web/staff/transport/Codename_Zero.webp'
+  },
+    {
+    name: 'Varell Himawan',
+    role: 'Staff of Nismara Transport',
+    image: 'https://images.nismara.my.id/web/staff/transport/Varell_Himawan.png'
+  },
+    {
+    name: 'Fachrezaa',
+    role: 'Staff of Nismara Transport',
+    image: 'https://images.nismara.my.id/web/staff/transport/fachrezaa.webp'
   }
 ];
 ---
@@ -74,6 +109,7 @@ const staff = [
 <Layout 
   title="About Us - Nismara Group"
   description="Pelajari lebih lanjut tentang sejarah, visi, dan misi Nismara Group sebagai ekosistem virtual company dan komunitas simulasi terkemuka di Indonesia."
+  animeFooter={true}
 >
   <main class="bg-white dark:bg-[#050505] transition-colors min-h-screen pt-32">
     
@@ -251,15 +287,16 @@ anggota dapat mengeksplorasi minat mereka dalam lingkungan yang suportif, realis
           <p class="text-[10px] font-mono uppercase tracking-[0.2em] text-primary-600 dark:text-primary-400 mb-4">Leadership</p>
           <h2 class="text-4xl md:text-5xl font-light text-gray-900 dark:text-white tracking-tight mb-16">Meet the Directors</h2>
           
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
             {directors.map((person, i) => (
-              <div class={`group flex flex-col gap-6 reveal delay-${(i % 4) * 100}`}>
-                <div class="aspect-[3/4] w-full overflow-hidden bg-gray-100 dark:bg-gray-900 rounded-sm">
-                  <img src={person.image} alt={person.name} class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
+              <div class={`group flex flex-col items-center gap-6 reveal delay-${(i % 4) * 100}`}>
+                <div class="w-full max-w-[512px] aspect-square overflow-hidden bg-gray-100 dark:bg-gray-900 rounded-[2rem] border border-black/5 dark:border-white/10 shadow-xl relative">
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none"></div>
+                  <img src={person.image} alt={person.name} class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 relative z-0" />
                 </div>
                 <div>
                   <h3 class="text-xl font-medium text-gray-900 dark:text-white mb-1 tracking-tight">{person.name}</h3>
-                  <p class="text-sm font-mono text-gray-500 uppercase tracking-wider">{person.role}</p>
+                  <p class="text-xs font-mono text-primary-600 dark:text-primary-400 uppercase tracking-wider">{person.role}</p>
                 </div>
               </div>
             ))}
@@ -290,13 +327,13 @@ anggota dapat mengeksplorasi minat mereka dalam lingkungan yang suportif, realis
     </section>
 
     <!-- Final CTA -->
-    <section class="py-32 px-6 bg-white dark:bg-[#050505] transition-colors relative flex items-center justify-center text-center overflow-hidden">
+    <section class="pt-32 pb-64 px-6 bg-white dark:bg-[#050505] transition-colors relative flex items-center justify-center text-center overflow-hidden">
       <div class="relative z-10 max-w-4xl mx-auto reveal">
         <h2 class="text-5xl md:text-7xl font-bold tracking-tighter text-gray-900 dark:text-white uppercase mb-8">Siap Mengaspal Bersama?</h2>
         <p class="text-xl md:text-2xl text-gray-500 dark:text-gray-400 font-light max-w-2xl mx-auto mb-12 leading-relaxed">
           Baik Anda seorang pengemudi virtual veteran maupun pemain kasual yang mencari komunitas ramah, selalu ada kursi kosong untuk Anda.
         </p>
-        <a href="#" class="inline-flex items-center gap-4 px-10 py-5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:scale-105 transition-transform duration-300 font-medium tracking-wide">
+        <a href="https://career.nismara.web.id" target="_blank" class="inline-flex items-center gap-4 px-10 py-5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:scale-105 transition-transform duration-300 font-medium tracking-wide">
           Bergabung Sekarang
         </a>
       </div>
