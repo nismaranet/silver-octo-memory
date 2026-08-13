@@ -1,0 +1,31 @@
+---
+// Redirect legacy WordPress URLs to the new Astro URL structure
+import { sanityClient } from 'sanity:client';
+import { ARTICLES_QUERY } from '../../../../utils/sanity';
+
+export async function getStaticPaths() {
+  const articles = await sanityClient.fetch(ARTICLES_QUERY);
+  
+  return articles
+    .filter((article: any) => article.publishedAt && article.slug?.current)
+    .map((article: any) => {
+      // Extract YYYY-MM-DD safely from ISO string without timezone shifts
+      const datePart = article.publishedAt.split('T')[0];
+      const [year, month, day] = datePart.split('-');
+      
+      return {
+        params: { 
+          year, 
+          month, 
+          day, 
+          slug: article.slug.current 
+        },
+      };
+    });
+}
+
+const { slug } = Astro.params;
+
+// Perform a 301 Permanent Redirect for SEO
+return Astro.redirect(`/articles/${slug}`, 301);
+---
