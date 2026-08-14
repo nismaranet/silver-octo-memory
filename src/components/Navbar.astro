@@ -1,12 +1,13 @@
 ---
-import { Plane, Truck, Flag, Wheat, Globe, Crosshair } from 'lucide-react';
+import { Plane, Truck, Flag, Wheat, Globe, Crosshair, Home, Info, Radio, Layers, Newspaper, Mail } from 'lucide-react';
 
 const navLinks = [
-  { name: 'Home', href: '/' },
-  { name: 'About', href: '/about-us' },
-  { name: 'Divisions', href: '#', isDropdown: true },
-  { name: 'Articles', href: '/articles' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'Home', href: '/', icon: Home },
+  { name: 'About', href: '/about-us', icon: Info },
+  { name: 'Radio', href: '/radio', icon: Radio },
+  { name: 'Divisions', href: '#', isDropdown: true, icon: Layers },
+  { name: 'Articles', href: '/articles', icon: Newspaper },
+  { name: 'Contact', href: '/contact', icon: Mail },
 ];
 
 const divisions = [
@@ -56,22 +57,26 @@ const divisions = [
       <img src="/images/nismara-group-logo-white.png" alt="Nismara Group" class="h-8 md:h-10 w-auto hidden dark:block" />
     </a>
     
-    <nav class="hidden md:flex items-center gap-8">
-      {navLinks.map(link => (
-        link.isDropdown ? (
+    <nav class="hidden md:flex items-center gap-6 lg:gap-8">
+      {navLinks.map(link => {
+        const Icon = link.icon;
+        const isActive = link.href === '/' ? Astro.url.pathname === '/' : Astro.url.pathname.startsWith(link.href) && link.href !== '#';
+        
+        return link.isDropdown ? (
           <div class="relative group">
-            <button class="flex items-center gap-1 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors py-2">
+            <button class={`flex items-center gap-1.5 text-sm font-medium transition-colors py-2 ${isActive ? 'text-primary-600 dark:text-primary-400' : 'text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400'}`}>
+              <Icon className="w-4 h-4" />
               {link.name}
-              <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+              <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
             </button>
             <div class="absolute top-full left-1/2 -translate-x-1/2 w-[500px] bg-white dark:bg-slate-900 shadow-2xl dark:shadow-slate-900/80 rounded-2xl border border-gray-100 dark:border-slate-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 overflow-hidden">
               <div class="p-6 grid grid-cols-2 gap-4">
                 {divisions.map(div => {
-                  const Icon = div.icon;
+                  const DivIcon = div.icon;
                   return (
                     <a href={div.href} target={div.href.startsWith('http') ? '_blank' : '_self'} class="flex items-start p-4 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors group/item">
                       <div class="p-2.5 rounded-lg bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 mr-4 shrink-0">
-                        <Icon className="w-6 h-6" />
+                        <DivIcon className="w-6 h-6" />
                       </div>
                       <div>
                         <h4 class="text-sm font-bold text-gray-900 dark:text-white group-hover/item:text-primary-600 dark:group-hover/item:text-primary-400 transition-colors mb-0.5">{div.name}</h4>
@@ -90,16 +95,20 @@ const divisions = [
         ) : (
           <a 
             href={link.href} 
-            class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-primary-600 dark:after:bg-primary-400 after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100"
+            class={`flex items-center gap-1.5 text-sm font-medium transition-colors relative py-2 ${isActive ? 'text-primary-600 dark:text-primary-400' : 'text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400'} after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-primary-600 dark:after:bg-primary-400 after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100 ${isActive ? 'after:scale-x-100 after:origin-bottom-left' : ''}`}
           >
+            <Icon className="w-4 h-4" />
             {link.name}
           </a>
         )
-      ))}
+      })}
       <a href="https://career.nismara.web.id" target="_blank" class="px-5 py-2.5 bg-primary-600 text-white text-sm font-medium rounded-full shadow-md shadow-primary-600/20 hover:bg-primary-700 transition-all hover:-translate-y-0.5">
         Join Us
       </a>
-      
+    </nav>
+    
+    <!-- Global Actions -->
+    <div class="flex items-center gap-2 md:gap-4">
       <button id="theme-toggle" class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 focus:outline-none transition-colors" aria-label="Toggle Dark Mode">
         <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
           <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
@@ -108,7 +117,49 @@ const divisions = [
           <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
         </svg>
       </button>
-    </nav>
+
+      <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 focus:outline-none transition-colors" aria-label="Toggle Mobile Menu">
+        <svg id="menu-icon-open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+        <svg id="menu-icon-close" class="hidden w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Panel -->
+  <div id="mobile-menu-panel" class="absolute top-full left-0 w-full bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 shadow-2xl transition-all duration-300 transform origin-top scale-y-0 opacity-0 hidden flex-col max-h-[85vh] overflow-y-auto">
+    <div class="p-6 flex flex-col gap-4">
+      {navLinks.map(link => {
+        const Icon = link.icon;
+        const isActive = link.href === '/' ? Astro.url.pathname === '/' : Astro.url.pathname.startsWith(link.href) && link.href !== '#';
+        
+        return link.isDropdown ? (
+          <div class="flex flex-col gap-3 pb-2 border-b border-gray-100 dark:border-slate-800 last:border-0">
+            <span class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{link.name}</span>
+            <div class="flex flex-col gap-2 pl-3 border-l-2 border-gray-100 dark:border-slate-800">
+              {divisions.map(div => {
+                const DivIcon = div.icon;
+                return (
+                  <a href={div.href} target={div.href.startsWith('http') ? '_blank' : '_self'} class="flex items-center gap-4 p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors">
+                    <DivIcon className="w-5 h-5 text-primary-600 dark:text-primary-400 shrink-0" />
+                    <div>
+                      <h4 class="text-sm font-bold text-gray-900 dark:text-white">{div.name}</h4>
+                    </div>
+                  </a>
+                )
+              })}
+            </div>
+          </div>
+        ) : (
+          <a href={link.href} class={`flex items-center gap-3 p-3 rounded-xl transition-colors ${isActive ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800'}`}>
+            <Icon className="w-5 h-5 shrink-0" />
+            <span class="font-semibold">{link.name}</span>
+          </a>
+        )
+      })}
+      <a href="https://career.nismara.web.id" target="_blank" class="mt-4 flex items-center justify-center gap-2 p-3.5 bg-primary-600 text-white font-bold rounded-xl shadow-md active:scale-95 transition-transform">
+        Join Us
+      </a>
+    </div>
   </div>
 </header>
 
@@ -133,6 +184,33 @@ const divisions = [
     } else {
       document.documentElement.classList.remove('dark');
       localStorage.setItem('theme', 'light');
+    }
+  });
+
+  // Mobile Menu Toggle
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+  const menuIconOpen = document.getElementById('menu-icon-open');
+  const menuIconClose = document.getElementById('menu-icon-close');
+
+  mobileMenuBtn?.addEventListener('click', () => {
+    const isClosed = mobileMenuPanel?.classList.contains('hidden');
+    if (isClosed) {
+      mobileMenuPanel?.classList.remove('hidden');
+      setTimeout(() => {
+        mobileMenuPanel?.classList.remove('scale-y-0', 'opacity-0');
+        mobileMenuPanel?.classList.add('scale-y-100', 'opacity-100');
+      }, 10);
+      menuIconOpen?.classList.add('hidden');
+      menuIconClose?.classList.remove('hidden');
+    } else {
+      mobileMenuPanel?.classList.remove('scale-y-100', 'opacity-100');
+      mobileMenuPanel?.classList.add('scale-y-0', 'opacity-0');
+      setTimeout(() => {
+        mobileMenuPanel?.classList.add('hidden');
+      }, 300);
+      menuIconOpen?.classList.remove('hidden');
+      menuIconClose?.classList.add('hidden');
     }
   });
 </script>
