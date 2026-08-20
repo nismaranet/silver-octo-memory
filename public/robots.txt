@@ -2,3 +2,6 @@ User-agent: *
 Allow: /
 
 Sitemap: https://nismara.web.id/sitemap-index.xml
+
+# Content Signals for AI
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
