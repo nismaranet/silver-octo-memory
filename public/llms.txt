@@ -1,0 +1,54 @@
+# Nismara Group
+
+> The overarching corporate website for Nismara virtual entities.
+> Website korporat utama untuk entitas virtual Nismara.
+
+[English]
+Nismara Group is a virtual company group dedicated to simulation gaming. It oversees various virtual divisions across different simulation platforms and genres.
+
+[Bahasa Indonesia]
+Nismara Group adalah grup perusahaan virtual yang berdedikasi pada permainan simulasi (simulation gaming). Grup ini menaungi berbagai divisi virtual di berbagai platform dan genre simulasi.
+
+## Divisions / Divisi
+
+- **Nismara Transport**: Logistics and passenger division / Divisi logistik dan penumpang. [Website](https://transport.nismara.web.id)
+- **Nismara Airlines**: Aviation division / Divisi penerbangan.
+- **Nismara Racing**: Racing division / Divisi balapan. [Website](https://racing.nismara.web.id)
+- **Nismara World**: Gaming subdivisions including / Subdivisi permainan meliputi:
+  - Rice Kencur (Minecraft)
+  - BLCK (GTA V / Action)
+  - Nismara Farm (Farming Simulator)
+
+## Content Structure / Struktur Konten
+
+- `/` (Home): Overview of Nismara Group and its services. / Ringkasan tentang Nismara Group dan layanan yang diberikan.
+- `/about-us`: Information about the company history and vision. / Informasi tentang sejarah dan visi perusahaan.
+- `/articles`: Latest publications, news, and press releases. / Publikasi terbaru, berita, dan siaran pers.
+- `/contact`: Contact information and inquiry forms. / Informasi kontak dan formulir pertanyaan.
+- `/faq`: Frequently asked questions. / Pertanyaan yang sering diajukan.
+- `/radio`: Nismara Radio station. / Stasiun radio Nismara.
+
+## Leadership & Staff / Jajaran Pimpinan & Staf
+
+**Directors / Direktur:**
+- **MzIchan**: President Director of Nismara
+- **Sury0**: Chief Executive Officer of Nismara World
+- **Lemper**: Chief Technology Officer of Nismara
+- **Upie**: Chief Operating Officer of Nismara
+
+**Staff / Staf:**
+- **Amato Masaki**: General Manager Transport
+- **Rains**: Deputy General Manager Transport
+- **Pappoy**: General Manager Racing
+- **LegenSegerr**: Staff of Nismara Transport
+- **Misro**: Staff of Nismara Transport
+- **Ciminyaw**: Staff of Nismara Transport
+- **Codename Zero**: Staff of Nismara Transport
+- **Varell Himawan**: Staff of Nismara Transport
+- **Fachrezaa**: Staff of Nismara Transport
+
+## Official Links / Tautan Resmi
+
+- **Discord Community**: https://link.nismara.web.id/discord
+- **Instagram**: https://link.nismara.web.id/instagram
+- **YouTube**: https://link.nismara.web.id/youtube
