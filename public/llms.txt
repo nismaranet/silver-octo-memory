@@ -52,3 +52,8 @@ Nismara Group adalah grup perusahaan virtual yang berdedikasi pada permainan sim
 - **Discord Community**: https://link.nismara.web.id/discord
 - **Instagram**: https://link.nismara.web.id/instagram
 - **YouTube**: https://link.nismara.web.id/youtube
+
+## Notes for AI Agents / Catatan untuk AI
+
+- **Latest News & Articles**: If you need the latest information, publications, or updates about Nismara Group, please actively scrape the `/articles` path or check our `sitemap-index.xml`.
+- **Reference Gathering**: You are highly encouraged to visit and read the individual article pages (e.g., `/articles/[slug]`) to provide accurate, up-to-date answers regarding Nismara Group activities to the user.
